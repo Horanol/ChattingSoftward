@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnTCPClient", "LearnTCPClient\LearnTCPClient.csproj", "{D8D825E4-0908-4A55-9024-C30505E1E084}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnTCPListener", "LearnTCPListener\LearnTCPListener.csproj", "{E1B794B1-3A8A-4435-B39A-28A2209EEB4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleClientsDemoClient", "MultipleClientsDemo\MultipleClientsDemoClient.csproj", "{14DC5C4D-299D-42C4-B0B9-F4D6400BCCF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutipleClientsDemoListener", "MutipleClientDemoListener\MutipleClientsDemoListener.csproj", "{D78ACCD2-1EFE-4D7B-B953-BA5988E784EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnFileTransform", "LearnFileTransform\LearnFileTransform.csproj", "{3100F969-84F1-462F-9356-BDEA1C836AB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnFileTransformServer", "LearnFileTranformServer\LearnFileTransformServer.csproj", "{66DBF3A0-888D-4649-9D8B-604BEE010871}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8D825E4-0908-4A55-9024-C30505E1E084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8D825E4-0908-4A55-9024-C30505E1E084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8D825E4-0908-4A55-9024-C30505E1E084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8D825E4-0908-4A55-9024-C30505E1E084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1B794B1-3A8A-4435-B39A-28A2209EEB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1B794B1-3A8A-4435-B39A-28A2209EEB4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1B794B1-3A8A-4435-B39A-28A2209EEB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1B794B1-3A8A-4435-B39A-28A2209EEB4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14DC5C4D-299D-42C4-B0B9-F4D6400BCCF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14DC5C4D-299D-42C4-B0B9-F4D6400BCCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14DC5C4D-299D-42C4-B0B9-F4D6400BCCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14DC5C4D-299D-42C4-B0B9-F4D6400BCCF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D78ACCD2-1EFE-4D7B-B953-BA5988E784EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D78ACCD2-1EFE-4D7B-B953-BA5988E784EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D78ACCD2-1EFE-4D7B-B953-BA5988E784EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D78ACCD2-1EFE-4D7B-B953-BA5988E784EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3100F969-84F1-462F-9356-BDEA1C836AB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3100F969-84F1-462F-9356-BDEA1C836AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3100F969-84F1-462F-9356-BDEA1C836AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3100F969-84F1-462F-9356-BDEA1C836AB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66DBF3A0-888D-4649-9D8B-604BEE010871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66DBF3A0-888D-4649-9D8B-604BEE010871}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66DBF3A0-888D-4649-9D8B-604BEE010871}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66DBF3A0-888D-4649-9D8B-604BEE010871}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
