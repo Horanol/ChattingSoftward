@@ -38,7 +38,7 @@ namespace MultipleClientsDemoClient
                     try
                     {
                         client = new TcpClient();
-                        client.Connect(IPAddress.Parse("192.168.10.1"), 8500);
+                        client.Connect(IPAddress.Parse("10.170.26.217"), 8500);
                         if (client.Connected)
                         {
                             Console.WriteLine("服务器已连接!    当前客户端:  {0}     --->当前服务器: {1}",
