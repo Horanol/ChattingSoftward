@@ -1,0 +1,20 @@
+<users>
+	<user>
+		<name>Joey</name>
+		<password>123</password>
+		<saying>hello world</saying>
+		<iconPath>C:\Users\q\Pictures\icon.jpg</iconPath>
+	</user>
+	<user>
+		<name>jack</name>
+		<password>123</password>
+		<saying>hello John</saying>
+		<iconPath>C:\Users\q\Pictures\icon2.jpg</iconPath>
+	</user>
+	<user>
+		<name>wang</name>
+		<password>123</password>
+		<saying>hello Annis</saying>
+		<iconPath>C:\Users\q\Pictures\阿狸.jpg</iconPath>
+	</user>	
+</users>

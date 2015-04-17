@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnFileTransformServer", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "聊天软件", "聊天软件\聊天软件.csproj", "{7BDF62E9-AD72-4F4C-9B15-5B322F9C0FC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "聊天软件_客户端", "聊天软件_客户端\聊天软件_客户端.csproj", "{6B852A3E-ADF6-41AC-87C0-EE9CAEE0B30C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{7BDF62E9-AD72-4F4C-9B15-5B322F9C0FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BDF62E9-AD72-4F4C-9B15-5B322F9C0FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BDF62E9-AD72-4F4C-9B15-5B322F9C0FC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B852A3E-ADF6-41AC-87C0-EE9CAEE0B30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B852A3E-ADF6-41AC-87C0-EE9CAEE0B30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B852A3E-ADF6-41AC-87C0-EE9CAEE0B30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B852A3E-ADF6-41AC-87C0-EE9CAEE0B30C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

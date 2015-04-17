@@ -44,7 +44,7 @@ namespace 聊天软件
             serverListener.Start();
 
             //输出开始监听信息
-            serverLogBox.Text = "开始监听.....";
+            serverLogBox.Text = "开始监听....."+System.Environment.NewLine;
 
             //新建线程处理客户端连接
             Thread newThread = new Thread(new ThreadStart(HandlerClients));

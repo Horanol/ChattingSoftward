@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7BDF62E9-AD72-4F4C-9B15-5B322F9C0FC0}</ProjectGuid>
+    <ProjectGuid>{6B852A3E-ADF6-41AC-87C0-EE9CAEE0B30C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>聊天软件</RootNamespace>
-    <AssemblyName>聊天软件</AssemblyName>
+    <RootNamespace>聊天软件_客户端</RootNamespace>
+    <AssemblyName>聊天软件_客户端</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,20 +44,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProtocolHandler.cs" />
-    <Compile Include="Server.cs" />
-    <Compile Include="ServersController.cs" />
-    <Compile Include="UserInfo.cs" />
-    <Compile Include="ServerMainForm.cs">
+    <Compile Include="Client.cs" />
+    <Compile Include="ClientMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServerMainForm.Designer.cs">
-      <DependentUpon>ServerMainForm.cs</DependentUpon>
+    <Compile Include="ClientMainForm.Designer.cs">
+      <DependentUpon>ClientMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConversationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConversationForm.Designer.cs">
+      <DependentUpon>ConversationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ServerMainForm.resx">
-      <DependentUpon>ServerMainForm.cs</DependentUpon>
+    <Compile Include="ProtocolHandler.cs" />
+    <Compile Include="testForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="testForm.Designer.cs">
+      <DependentUpon>testForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInfo.cs" />
+    <EmbeddedResource Include="ClientMainForm.resx">
+      <DependentUpon>ClientMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConversationForm.resx">
+      <DependentUpon>ConversationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -68,6 +91,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="testForm.resx">
+      <DependentUpon>testForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
