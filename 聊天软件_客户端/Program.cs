@@ -21,7 +21,7 @@ namespace 聊天软件_客户端
             loginForm.ShowDialog();
             if (loginForm.DialogResult == DialogResult.OK)
             {
-                ClientMainForm cf = new ClientMainForm(loginForm.clientName,loginForm.client);
+                ClientMainForm cf = new ClientMainForm(loginForm.clientName, loginForm.client);
                 Application.Run(cf);
 
                 loginForm.Dispose();

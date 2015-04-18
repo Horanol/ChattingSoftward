@@ -28,11 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientMainForm));
             this.iconBox = new System.Windows.Forms.PictureBox();
             this.nameLabel = new System.Windows.Forms.Label();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.listView1 = new System.Windows.Forms.ListView();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -61,14 +58,6 @@
             this.nameLabel.Text = "test";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "IMG_0152.jpg");
-            this.imageList1.Images.SetKeyName(1, "IMG_0159.jpg");
-            this.imageList1.Images.SetKeyName(2, "dc28731dfdea771f69bee8c3a77499b5.jpg");
-            // 
             // listView1
             // 
             this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -89,6 +78,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "添加好友";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -107,10 +97,11 @@
             // 
             // sayingLabel
             // 
+            this.sayingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sayingLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.sayingLabel.Location = new System.Drawing.Point(140, 55);
+            this.sayingLabel.Location = new System.Drawing.Point(159, 55);
             this.sayingLabel.Name = "sayingLabel";
-            this.sayingLabel.Size = new System.Drawing.Size(164, 68);
+            this.sayingLabel.Size = new System.Drawing.Size(145, 68);
             this.sayingLabel.TabIndex = 5;
             this.sayingLabel.Text = "今天是个好日子";
             // 
@@ -135,7 +126,6 @@
 
         private System.Windows.Forms.PictureBox iconBox;
         private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;

@@ -34,7 +34,7 @@ namespace 聊天软件_客户端
                 try
                 {
                     //client = new TcpClient();
-                    client.Connect(IPAddress.Parse("10.170.69.113"), 8500);
+                    client.Connect(IPAddress.Parse("10.170.26.17"), 8500);
                     if (client.Connected)
                     {
                         streamToServer = client.GetStream();
@@ -141,8 +141,6 @@ namespace 聊天软件_客户端
         /// <param name="msgArray"></param>
         private void HandleMessage(MessageProtocol pro)
         {
-            //客户端显示消息
-            //messageBox.Text += pro.message + "\n";
 
             //若是服务器单独给客户端发的消息
             if (pro.sourceName.ToLower() == "server")
