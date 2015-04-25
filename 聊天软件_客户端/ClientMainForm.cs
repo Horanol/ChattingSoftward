@@ -12,22 +12,20 @@ namespace 聊天软件_客户端
 {
     public partial class ClientMainForm : Form
     {
-        private string clientName;
         private Client myClient;
         private UserDetailInfo? info;
         public ClientMainForm()
         {
             InitializeComponent();
         }
-        public ClientMainForm(string name,Client client)
+        public ClientMainForm(Client client)
         {
             myClient = client;
-            clientName = name;
             InitializeComponent();
         }
         private void ClientMainForm_Load(object sender, EventArgs e)
         {
-            info = UserInfo.GetUserDetailInfo(clientName);
+            info = UserInfo.GetUserDetailInfo(myClient.clientName);
             if (info != null)//或写成info.hasValue
             {
                 this.nameLabel.Text = info.Value.userName;//注意要通过Value获取值

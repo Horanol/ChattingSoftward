@@ -13,16 +13,20 @@ namespace 聊天软件_客户端
     {
         private const int BufferSize = 8192;
         private byte[] buffer;
+        public string clientName;
         private NetworkStream streamToServer;
         //这样子写还没有新建client引用，只有要给引用分配对象时才建立引用
         private TcpClient client;
-        private LoginForm loginForm;
-        public Client(LoginForm _loginForm)
+        private IPAddress serverIPAddress;
+        private IPAddress clientIPAddress;
+        public Client()
         {
             //做好初始化工作
             buffer = new byte[BufferSize];
-            loginForm = _loginForm;
-            
+            serverIPAddress = Dns.GetHostAddresses(Dns.GetHostName())//这个函数返回一堆ip地址，包括ipv6，ipv4等待，所以需要筛选
+                                                                             .Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).First();
+            clientIPAddress = Dns.GetHostAddresses(Dns.GetHostName())//这个函数返回一堆ip地址，包括ipv6，ipv4等待，所以需要筛选
+                                                                                  .Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).First();
         }
         public bool TryConnectToServer()
         {
@@ -33,8 +37,7 @@ namespace 聊天软件_客户端
             {
                 try
                 {
-                    //client = new TcpClient();
-                    client.Connect(IPAddress.Parse("10.170.26.17"), 8500);
+                    client.Connect(serverIPAddress, 8500);
                     if (client.Connected)
                     {
                         streamToServer = client.GetStream();
@@ -145,24 +148,74 @@ namespace 聊天软件_客户端
             //若是服务器单独给客户端发的消息
             if (pro.sourceName.ToLower() == "server")
             {
-                if (pro.message.ToLower() == "accepted")
+                if (pro.content == "LoginAccepted")
                 {
-                    loginForm.AcceptLogin();
+                    LoginForm.OnAcceptLogin();
                 }
-                else if (pro.message.ToLower() == "refused")
+                else if (pro.content == "LoginRefused")
                 {
-                    loginForm.RefuseLogin();
+                    LoginForm.OnRefuseLogin();
+                }
+                else if (pro.content == "UserNameAccepted")
+                {
+                    RegisterForm.OnCheckUserName(true);
+                }
+                else if (pro.content == "UserNameRefused")
+                {
+                    RegisterForm.OnCheckUserName(false);
                 }
             }
-             //若是客户端转发别人的消息
+            //若是客户端转发别人的消息
             else
             {
-                
+
             }
 
         }
         private void HandleFileRequest(FileProtocol pro)
         {
+
+        }
+        public bool SendFile(string filePath)
+        {
+            //发送协议到服务器
+            string fileName = Path.GetFileName(filePath);
+            FileProtocol pro = new FileProtocol(FileProtocol.FileRequestMode.Send, 8600, clientName, "server", fileName);
+            SendMessage(pro.ToString());
+
+            //在客户端监听8600端口，用于传送文件
+            TcpListener fileListener = new TcpListener(clientIPAddress, 8600);
+            fileListener.Start();
+            //中断，等待远程连接
+            TcpClient localClient = fileListener.AcceptTcpClient();
+
+            NetworkStream fileStream = localClient .GetStream();
+            //创建文件流
+            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            byte[] fileBuffer = new byte[1024];
+            int bytesRead;
+            //将文件流写入网络流
+            try
+            {
+                do
+                {
+                    bytesRead = fs.Read(fileBuffer, 0, fileBuffer.Length);
+                    fileStream.Write(fileBuffer, 0, bytesRead);
+                } while (bytesRead > 0);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                //把文件流，网络流，监听端和客户端都回收
+                fileStream.Dispose();
+                fs.Dispose();
+                localClient.Close();
+                fileListener.Stop();
+            }
 
         }
     }

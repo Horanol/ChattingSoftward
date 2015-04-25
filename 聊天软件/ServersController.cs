@@ -34,11 +34,13 @@ namespace 聊天软件
         public static void SignOut(string name)
         {
             //退出登录，删除字典的有关内容
-            if (servers.ContainsKey(name))
+            if (servers != null)
             {
-                servers.Remove(name);
+                if (servers.ContainsKey(name))
+                {
+                    servers.Remove(name);
+                }
             }
-
 
         }
         public static void SignIn(string name, Server server)

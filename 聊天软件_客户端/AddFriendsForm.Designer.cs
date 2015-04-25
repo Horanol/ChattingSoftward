@@ -69,20 +69,20 @@
             this.selectFriendsPanel.AutoScroll = true;
             this.selectFriendsPanel.Location = new System.Drawing.Point(55, 74);
             this.selectFriendsPanel.Name = "selectFriendsPanel";
-            this.selectFriendsPanel.Size = new System.Drawing.Size(544, 280);
+            this.selectFriendsPanel.Size = new System.Drawing.Size(551, 300);
             this.selectFriendsPanel.TabIndex = 3;
             // 
             // AddFriendsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(629, 362);
+            this.ClientSize = new System.Drawing.Size(629, 382);
             this.Controls.Add(this.selectFriendsPanel);
             this.Controls.Add(this.searchLabel);
             this.Controls.Add(this.searchBtn);
             this.Controls.Add(this.inputNameBox);
-            this.MaximumSize = new System.Drawing.Size(645, 400);
-            this.MinimumSize = new System.Drawing.Size(645, 400);
+            this.MaximumSize = new System.Drawing.Size(645, 420);
+            this.MinimumSize = new System.Drawing.Size(645, 420);
             this.Name = "AddFriendsForm";
             this.Text = "添加好友";
             this.Load += new System.EventHandler(this.AddFriendsForm_Load);

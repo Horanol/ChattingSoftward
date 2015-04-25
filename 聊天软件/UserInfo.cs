@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Xml;
 using System.Windows.Forms;
+using System.IO;
 namespace 聊天软件
 {
     /// <summary>
@@ -15,6 +16,8 @@ namespace 聊天软件
     public static class UserInfo
     {
         private static Dictionary<string, UserDetailInfo> infoDictionary;
+        private static string infoXmlPath;
+        private static XmlDocument doc;
         /// <summary>
         /// 可以有静态构造函数，从中初始化用户信息字典
         /// 在创建第一个类实例或任何静态成员被引用时，.NET将自动调用静态构造函数来初始化类。
@@ -23,9 +26,29 @@ namespace 聊天软件
         {
             //从文件中读取全部注册的用户信息，构造用户信息字典
             infoDictionary = new Dictionary<string, UserDetailInfo>();//记得new一个对象再使用！！！
-            string infoXmlPath = @"E:\CPlusProject\LearnTCPProgramming\聊天软件\UserInfo.xml";
-            XmlDocument doc = new XmlDocument();
+            infoXmlPath = AppDomain.CurrentDomain.BaseDirectory + "UserInfo.xml";
+            //判断文件是否存在，而不是判断目录是否存在
+            if (!File.Exists(infoXmlPath))
+            {
+                CreateEmptyXmlDocument(); 
+            }
+            doc = new XmlDocument();
             doc.Load(infoXmlPath);
+
+            InitialInfoDictionary();
+
+        }
+        private static void CreateEmptyXmlDocument()
+        {
+            doc = new XmlDocument();
+            XmlDeclaration dec = doc.CreateXmlDeclaration("1.0", "", "yes");
+            doc.PrependChild(dec);//把声明节点放到开头
+            XmlElement usersElement = doc.CreateElement("users");
+            doc.AppendChild(usersElement);
+            doc.Save(infoXmlPath);
+        }
+        private static void InitialInfoDictionary()
+        {
             XmlNodeList userNodeList = doc.SelectNodes("/users/user");
             if (userNodeList != null)
             {
@@ -35,7 +58,8 @@ namespace 聊天软件
                     string name = userNode.SelectSingleNode("name").InnerText;
                     string password = userNode.SelectSingleNode("password").InnerText;
                     string saying = userNode.SelectSingleNode("saying").InnerText;
-                    UserDetailInfo info = new UserDetailInfo(name, password, saying);
+                    string iconPath = userNode.SelectSingleNode("iconPath").InnerText;
+                    UserDetailInfo info = new UserDetailInfo(name, password, saying, iconPath);
                     infoDictionary.Add(name, info);
                 }
             }
@@ -44,9 +68,15 @@ namespace 聊天软件
         {
             //保存用户详细信息到硬盘
             SaveUserInfo(info);
-            //在当前用户信息字典登记该用户信息
-            infoDictionary.Add(info.userName,info);
-            
+            //在字典中把新用户信息收集
+            infoDictionary.Add(info.userName, info);
+        }
+        public static bool CheckUserNameAvailable(string userName)
+        {
+            if (infoDictionary.ContainsKey(userName))
+                return false;
+            else
+                return true;
         }
         public static bool SignIn(string name, string password)
         {
@@ -56,7 +86,6 @@ namespace 聊天软件
                 if (password == infoDictionary[name].password)
                 {
                     //登陆成功
-
                     return true;
                 }
                 else
@@ -81,9 +110,6 @@ namespace 聊天软件
         /// <param name="info"></param>
         public static void SaveUserInfo(UserDetailInfo info)
         {
-            string infoXmlPath = @"E:\CPlusProject\LearnTCPProgramming\聊天软件\UserInfo.xml";
-            XmlDocument doc = new XmlDocument();
-            doc.Load(infoXmlPath);
             XmlNode usersNode = doc.SelectSingleNode("users");
             XmlNode newUser = doc.CreateElement("user");
 
@@ -96,10 +122,16 @@ namespace 聊天软件
             XmlElement newUserSaying = doc.CreateElement("saying");
             newUserSaying.InnerText = info.sayings;
 
+            XmlElement newUserIconPath = doc.CreateElement("iconPath");
+            newUserIconPath.InnerText = info.iconPath;
+
             newUser.AppendChild(newUserName);
             newUser.AppendChild(newUserPassword);
             newUser.AppendChild(newUserSaying);
+            newUser.AppendChild(newUserIconPath);
             usersNode.AppendChild(newUser);
+
+            doc.Save(infoXmlPath);
         }
         /// <summary>
         /// 返回值加？表示可以为空，用的时候也要加？如UserDetailInfo? a = GetUserDetailInfo(name);
@@ -115,6 +147,21 @@ namespace 聊天软件
             else
                 return null;
         }
+    }
+    public struct UserDetailInfo
+    {
+        public string userName;
+        public string password;
+        public string sayings;
+        public string iconPath;
+        public UserDetailInfo(string _name, string _password, string _sayings ,string _iconPath)
+        {
+            userName = _name;
+            password = _password;
+            sayings = _sayings;
+            iconPath = _iconPath;
+        }
+
     }
 
 }

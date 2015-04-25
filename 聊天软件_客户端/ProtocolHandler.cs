@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Xml;
-using System.Windows.Forms;
 
 namespace 聊天软件_客户端
 {
@@ -69,9 +68,11 @@ namespace 聊天软件_客户端
     /// </summary>    
     public class FileProtocol : Protocol
     {
-        private readonly FileRequestMode mode;
-        private readonly int port;
-        private readonly string fileName;
+        public FileRequestMode mode { get; set; }
+        public int port { get; set; }
+        public string sourceName { get; set; }
+        public string destinationName { get; set; }
+        public string fileName { get; set; }
 
         /// <summary>
         /// 定义枚举类型表示发送和接收文件模式
@@ -82,21 +83,20 @@ namespace 聊天软件_客户端
             Receive,
         }
 
-        public FileProtocol(FileRequestMode mode, int port, string fileName)
+        public FileProtocol(FileRequestMode _mode, int _port, string _sourceName, string _destinationName, string _fileName)
         {
-            this.mode = mode;
-            this.port = port;
-            this.fileName = fileName;
+            this.mode = _mode;
+            this.port = _port;
+            this.sourceName = _sourceName;
+            this.destinationName = _destinationName;
+            this.fileName = _fileName;
         }
 
-        public FileRequestMode Mode { get { return mode; } }
-        public int Port { get { return port; } }
-        public string FileName { get { return fileName; } }
 
         public override string ToString()
         {
-            return String.Format("<protocol><message type=\"{0}\" name=\"{1}\" mode=\"{2}\" port=\"{3}\" /></protocol>",
-                "file", fileName, mode, port);
+            return String.Format("<protocol><message type=\"{0}\" sourceName=\"{1}\" destinationName=\"{2}\" fileName=\"{3}\" mode=\"{4}\" port=\"{5}\" /></protocol>",
+                "file", sourceName, destinationName, fileName, mode, port);
         }
     }
     /// <summary>
@@ -106,18 +106,18 @@ namespace 聊天软件_客户端
     {
         public string sourceName { get; set; }
         public string destinationName { get; set; }
-        public string message { get; set; }
+        public string content { get; set; }
         public MessageProtocol(string _sourceName, string _destinationName, string _message)
         {
             this.sourceName = _sourceName;
             this.destinationName = _destinationName;
-            this.message = _message;
+            this.content = _message;
         }
         //构造xml格式消息
         public override string ToString()
         {
             return String.Format("<protocol><message type=\"{0}\" sourceName=\"{1}\" destinationName=\"{2}\" content=\"{3}\" /></protocol>",
-                "conversation", sourceName, destinationName, message);
+                "conversation", sourceName, destinationName, content);
         }
 
     }
@@ -136,6 +136,28 @@ namespace 聊天软件_客户端
                 "signIn", userName, password);
         }
     }
+    public class UserDetailInfoProtocol : Protocol
+    {
+        public string userName;
+        public string password;
+        public string sayings;
+        public string iconPath;
+        public UserDetailInfoProtocol(UserDetailInfo info)
+        {
+            userName = info.userName;
+            password = info.password;
+            sayings = info.sayings;
+            iconPath = info.iconPath;
+        }
+        public override string ToString()
+        {
+            return String.Format("<protocol><message type=\"{0}\" userName=\"{1}\" password=\"{2}\" saying=\"{3}\" iconPath=\"{4}\" /></protocol>",
+                         "UserDetailInfo", userName, password, sayings, iconPath);
+        }
+    }
+    /// <summary>
+    /// 该帮助类把xml格式的协议消息转换成强类型协议
+    /// </summary>
     public class MessageHelper
     {
         private XmlNode messageNode;
@@ -147,26 +169,31 @@ namespace 聊天软件_客户端
             root = doc.DocumentElement;//获取xml文档的根
             messageNode = root.SelectSingleNode("message");
         }
+        /// <summary>
+        /// 返回强类型协议，失败返回null
+        /// </summary>
+        /// <returns>Protocol 或 null</returns>
         public Protocol GetProtocol()
         {
             if (messageNode.Attributes["type"].Value == "conversation")
             {
                 string sourceName = messageNode.Attributes["sourceName"].Value;
                 string destinationName = messageNode.Attributes["destinationName"].Value;
-                string message = messageNode.Attributes["content"].Value;
+                string content = messageNode.Attributes["content"].Value;
                 //返回消息类型
-                return new MessageProtocol(sourceName, destinationName, message);
+                return new MessageProtocol(sourceName, destinationName, content);
             }
             else if (messageNode.Attributes["type"].Value == "file")
             {
-                string fileName = messageNode.Attributes["name"].Value;
+                string fileName = messageNode.Attributes["fileName"].Value;
                 int port = Convert.ToInt32(messageNode.Attributes["port"].Value);
+                string sourceName = messageNode.Attributes["sourceName"].Value;
+                string destinationName = messageNode.Attributes["destinationName"].Value;
+                string mode = messageNode.Attributes["mode"].Value.ToLower();
 
-                string mode = messageNode.Attributes["mode"].Value;
-                mode = mode.ToLower();
                 FileProtocol.FileRequestMode requestMode = (mode == "send" ? FileProtocol.FileRequestMode.Send : FileProtocol.FileRequestMode.Receive);
                 //返回文件类型
-                return new FileProtocol(requestMode, port, fileName);
+                return new FileProtocol(requestMode, port, sourceName, destinationName, fileName);
             }
             else if (messageNode.Attributes["type"].Value == "signIn")
             {
@@ -174,6 +201,15 @@ namespace 聊天软件_客户端
                 string password = messageNode.Attributes["password"].Value;
 
                 return new SignInProtocol(userName, password);
+            }
+            else if (messageNode.Attributes["type"].Value == "UserDetailInfo")
+            {
+                string userName = messageNode.Attributes["userName"].Value;
+                string password = messageNode.Attributes["password"].Value;
+                string saying = messageNode.Attributes["saying"].Value;
+                string iconPath = messageNode.Attributes["iconPath"].Value;
+                UserDetailInfo info = new UserDetailInfo(userName, password, saying, iconPath);
+                return new UserDetailInfoProtocol(info);
             }
             else
                 return null;

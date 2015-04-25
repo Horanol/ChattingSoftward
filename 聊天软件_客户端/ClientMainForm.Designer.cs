@@ -40,9 +40,9 @@
             // 
             // iconBox
             // 
-            this.iconBox.Location = new System.Drawing.Point(7, 3);
+            this.iconBox.Location = new System.Drawing.Point(8, 3);
             this.iconBox.Name = "iconBox";
-            this.iconBox.Size = new System.Drawing.Size(109, 120);
+            this.iconBox.Size = new System.Drawing.Size(120, 120);
             this.iconBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.iconBox.TabIndex = 0;
             this.iconBox.TabStop = false;
@@ -50,10 +50,10 @@
             // nameLabel
             // 
             this.nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameLabel.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.nameLabel.Location = new System.Drawing.Point(165, 4);
+            this.nameLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.nameLabel.Location = new System.Drawing.Point(143, 9);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(98, 34);
+            this.nameLabel.Size = new System.Drawing.Size(161, 23);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "test";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -99,9 +99,9 @@
             // 
             this.sayingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sayingLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.sayingLabel.Location = new System.Drawing.Point(159, 55);
+            this.sayingLabel.Location = new System.Drawing.Point(143, 38);
             this.sayingLabel.Name = "sayingLabel";
-            this.sayingLabel.Size = new System.Drawing.Size(145, 68);
+            this.sayingLabel.Size = new System.Drawing.Size(157, 85);
             this.sayingLabel.TabIndex = 5;
             this.sayingLabel.Text = "今天是个好日子";
             // 
