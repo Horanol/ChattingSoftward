@@ -17,15 +17,17 @@ namespace 聊天软件_客户端
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //把登录窗口作为模式对话框，先于主窗口打开
-            LoginForm loginForm = new LoginForm();
-            loginForm.ShowDialog();
-            if (loginForm.DialogResult == DialogResult.OK)
-            {
-                ClientMainForm cf = new ClientMainForm(loginForm.client);
-                Application.Run(cf);
+            //   LoginForm loginForm = new LoginForm();
+            //   loginForm.ShowDialog();
+            //   if (loginForm.DialogResult == DialogResult.OK)
+            //   {
+            //       ClientMainForm cf = new ClientMainForm(loginForm.client);
+            //       Application.Run(cf);
 
-                loginForm.Dispose();
-            }
-         }
+            //       loginForm.Dispose();
+            //   }
+            //}
+            Application.Run(new ConversationForm());
+        }
     }
 }

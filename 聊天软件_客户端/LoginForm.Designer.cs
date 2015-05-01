@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.userIconBox = new System.Windows.Forms.PictureBox();
             this.topBackgroundPictureBox = new System.Windows.Forms.PictureBox();
             this.userNameBox = new System.Windows.Forms.TextBox();
@@ -37,7 +36,6 @@
             this.signUpBtn = new System.Windows.Forms.Button();
             this.findPasswordBtn = new System.Windows.Forms.Button();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.rememberUserNameCheckBox = new System.Windows.Forms.CheckBox();
             this.rememberPasswordCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.userIconBox)).BeginInit();
@@ -122,12 +120,6 @@
             this.statusLabel.TabIndex = 5;
             this.statusLabel.Text = "statusLabel";
             // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // rememberUserNameCheckBox
             // 
             this.rememberUserNameCheckBox.AutoSize = true;
@@ -189,7 +181,6 @@
         private System.Windows.Forms.Button signUpBtn;
         private System.Windows.Forms.Button findPasswordBtn;
         private System.Windows.Forms.Label statusLabel;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.CheckBox rememberUserNameCheckBox;
         private System.Windows.Forms.CheckBox rememberPasswordCheckBox;
     }

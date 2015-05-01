@@ -23,8 +23,6 @@ namespace 聊天软件_客户端
         }
         private void AddFriendsForm_Load(object sender, EventArgs e)
         {
-            this.selectFriendsPanel.VerticalScroll.Enabled = true;
-            this.selectFriendsPanel.VerticalScroll.Visible = true;
         }
         private void searchBtn_Click(object sender, EventArgs e)
         {
