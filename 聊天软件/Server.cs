@@ -112,9 +112,9 @@ namespace 聊天软件
         {
 
             //服务器端显示日志
-            serverLogTextBox.Text += "收到信息: " + pro.content + "  来自 " + pro.sourceName + RemoteEndPoint.ToString() + "   发送给: " + pro.destinationName + "\n";
+            serverLogTextBox.Text += "收到信息: " + pro.content + "  来自 " + pro.sourceName + RemoteEndPoint.ToString() + "   发送给: " + pro.destinationName + Environment.NewLine;
             //委托ServersController转发消息
-            ServersController.SendMessage(pro.sourceName, pro.destinationName, pro.content);
+            ServersController.SendMessage(pro);
 
         }
         private void HandleFileRequest(FileProtocol pro)
@@ -234,7 +234,7 @@ namespace 聊天软件
             }
             catch
             {
-                serverLogTextBox.Text += "无法发送消息!" + "\n";
+                serverLogTextBox.Text += "无法发送消息!" +Environment.NewLine;
             }
         }
     }

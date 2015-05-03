@@ -40,6 +40,18 @@ namespace 聊天软件_客户端
             adForm.Show();
         }
 
+        private void JoeyBtn_Click(object sender, EventArgs e)
+        {
+            ConversationForm JoeyForm = new ConversationForm("Joey", "tt", myClient);
+            JoeyForm.Show();
+        }
+
+        private void ttBtn_Click(object sender, EventArgs e)
+        {
+            ConversationForm ttForm = new ConversationForm("tt", "Joey", myClient);
+            ttForm.Show();
+        }
+
 
 
 

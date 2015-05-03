@@ -34,6 +34,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.sayingLabel = new System.Windows.Forms.Label();
+            this.JoeyBtn = new System.Windows.Forms.Button();
+            this.ttBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +87,8 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.ttBtn);
+            this.panel1.Controls.Add(this.JoeyBtn);
             this.panel1.Controls.Add(this.sayingLabel);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.listView1);
@@ -104,6 +108,26 @@
             this.sayingLabel.Size = new System.Drawing.Size(157, 85);
             this.sayingLabel.TabIndex = 5;
             this.sayingLabel.Text = "今天是个好日子";
+            // 
+            // JoeyBtn
+            // 
+            this.JoeyBtn.Location = new System.Drawing.Point(54, 248);
+            this.JoeyBtn.Name = "JoeyBtn";
+            this.JoeyBtn.Size = new System.Drawing.Size(75, 23);
+            this.JoeyBtn.TabIndex = 6;
+            this.JoeyBtn.Text = "JoeyBtn";
+            this.JoeyBtn.UseVisualStyleBackColor = true;
+            this.JoeyBtn.Click += new System.EventHandler(this.JoeyBtn_Click);
+            // 
+            // ttBtn
+            // 
+            this.ttBtn.Location = new System.Drawing.Point(54, 315);
+            this.ttBtn.Name = "ttBtn";
+            this.ttBtn.Size = new System.Drawing.Size(75, 23);
+            this.ttBtn.TabIndex = 7;
+            this.ttBtn.Text = "ttBtn";
+            this.ttBtn.UseVisualStyleBackColor = true;
+            this.ttBtn.Click += new System.EventHandler(this.ttBtn_Click);
             // 
             // ClientMainForm
             // 
@@ -130,6 +154,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label sayingLabel;
+        private System.Windows.Forms.Button ttBtn;
+        private System.Windows.Forms.Button JoeyBtn;
     }
 }
 

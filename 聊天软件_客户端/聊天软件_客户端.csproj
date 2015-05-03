@@ -57,6 +57,7 @@
     <Compile Include="ClientMainForm.Designer.cs">
       <DependentUpon>ClientMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogicController.cs" />
     <Compile Include="ConversationForm.cs">
       <SubType>Form</SubType>
     </Compile>

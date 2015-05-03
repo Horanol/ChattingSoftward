@@ -94,12 +94,6 @@ namespace 聊天软件_客户端
             {
                 //尝试结束读取，若读取到的字节数为0则说明服务器关闭了数据流
                 bytesRead = streamToServer.EndRead(ar);
-                //if (bytesRead == 0)
-                //{
-                //    streamToServer.Dispose();
-                //    client.Close();
-                //    return;
-                //}
 
                 //获取带有协议头的字符串，可能是多个消息一起
                 string msg = Encoding.Unicode.GetString(buffer, 0, bytesRead);
@@ -150,25 +144,26 @@ namespace 聊天软件_客户端
             {
                 if (pro.content == "LoginAccepted")
                 {
-                    LoginForm.OnAcceptLogin();
+                    LogicController.CanLogin();
                 }
                 else if (pro.content == "LoginRefused")
                 {
-                    LoginForm.OnRefuseLogin();
+                    LogicController.CanNotLogin();
                 }
                 else if (pro.content == "UserNameAccepted")
                 {
-                    RegisterForm.OnCheckUserName(true);
+                    LogicController.CanUseTheUserName();
                 }
                 else if (pro.content == "UserNameRefused")
                 {
-                    RegisterForm.OnCheckUserName(false);
+                    LogicController.CanNotUseTheUserName();
                 }
             }
-            //若是客户端转发别人的消息
+            //若是别的好友的消息
             else
             {
-
+                //pro.sourceName表示好友的名字,转发好友的消息
+                LogicController.PassMessage(pro.sourceName, pro.content);
             }
 
         }
@@ -181,7 +176,8 @@ namespace 聊天软件_客户端
             //发送协议到服务器
             string fileName = Path.GetFileName(filePath);
             FileProtocol pro = new FileProtocol(FileProtocol.FileRequestMode.Send, 8600, clientName, "server", fileName);
-            SendMessage(pro.ToString());
+            if(this.TryConnectToServer())
+                SendMessage(pro.ToString());
 
             //在客户端监听8600端口，用于传送文件
             TcpListener fileListener = new TcpListener(clientIPAddress, 8600);

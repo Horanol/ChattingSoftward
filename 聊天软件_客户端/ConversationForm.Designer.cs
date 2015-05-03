@@ -139,6 +139,7 @@
             this.MinimumSize = new System.Drawing.Size(550, 450);
             this.Name = "ConversationForm";
             this.Text = "和XXX的会话";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ConversationForm_FormClosed);
             this.Load += new System.EventHandler(this.ConversationForm_Load);
             this.sendMessagePanel.ResumeLayout(false);
             this.sendMessagePanel.PerformLayout();
