@@ -66,5 +66,17 @@ namespace 聊天软件_客户端
         }
         #endregion
 
+        #region 关于AddFriendsForm的逻辑方法
+        public static void ShowInfoInSearchPanel(PublicUserInfo info)
+        {
+            AddFriendsForm.OnShowInfoInSearchPanel(info);
+        }
+        
+        #endregion
+
+        public static void CreateRespondRequestForm()
+        {
+            
+        }
     }
 }

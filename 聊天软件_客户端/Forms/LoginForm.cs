@@ -115,10 +115,13 @@ namespace 聊天软件_客户端
 
         private void userNameBox_Leave(object sender, EventArgs e)
         {
-            UserDetailInfo? info = UserInfo.GetUserDetailInfo(clientName);
-            if (info != null)
+            PublicUserInfo? publicInfo = UserInfo.GetPublicUserInfo(clientName);
+            if (publicInfo != null)
             {
-                userIconBox.ImageLocation = info.Value.iconPath;
+                if(publicInfo.Value.iconPath != "")
+                     userIconBox.ImageLocation = publicInfo.Value.iconPath;
+                else
+                    userIconBox.Image = global::聊天软件_客户端.Properties.Resources.cantFindPicture;
             }
         }
 

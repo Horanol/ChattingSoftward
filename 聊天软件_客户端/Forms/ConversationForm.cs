@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace 聊天软件_客户端
@@ -15,8 +9,8 @@ namespace 聊天软件_客户端
         private string friendsName;
         private string sourceName;
         private int currentHeight = 0;
-        private UserDetailInfo? myInfo;
-        private UserDetailInfo? friendsInfo;
+        private PublicUserInfo? myInfo;
+        private PublicUserInfo? friendsInfo;
         private Client myClient;
 
         public ConversationForm(string _sourceName, string _friendsName, Client _myClient)
@@ -34,8 +28,8 @@ namespace 聊天软件_客户端
         private void ConversationForm_Load(object sender, EventArgs e)
         {
             this.Text = "和" + friendsName + "的会话";
-            myInfo = UserInfo.GetUserDetailInfo(sourceName);
-            friendsInfo = UserInfo.GetUserDetailInfo(friendsName);
+            myInfo = UserInfo.GetPublicUserInfo(sourceName);
+            friendsInfo = UserInfo.GetPublicUserInfo(friendsName);
             LogicController.AddConverstionForm(friendsName, this);
 
         }

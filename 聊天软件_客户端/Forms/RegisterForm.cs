@@ -127,10 +127,10 @@ namespace 聊天软件_客户端
             }
             else
             {
-                submitUserInfo();
+                SubmitUserInfo();
             }
         }
-        private void submitUserInfo()
+        private void SubmitUserInfo()
         {
             UserDetailInfo info;
             if (selectIconPath != "")
@@ -143,10 +143,10 @@ namespace 聊天软件_客户端
                 File.Copy(selectIconPath, newIconPathWithFullName, true);
 
                 //用新的图片路径构造UserDetailInfo
-                info = new UserDetailInfo(userName, userPassword, userSaying, newIconPathWithFullName);
+                info = new UserDetailInfo(userName, userPassword, userSaying, newIconPathWithFullName,null);
             }
             else
-                info = new UserDetailInfo(userName, userPassword, userSaying, "");
+                info = new UserDetailInfo(userName, userPassword, userSaying, "",null);
 
             //构建UserDetailInfoProtocol协议消息并提交给服务器
             UserDetailInfoProtocol infoPro = new UserDetailInfoProtocol(info);
@@ -154,8 +154,9 @@ namespace 聊天软件_客户端
             //若有头像，则先发送头像过去
             if (infoPro.iconPath != "")
             {
+                FileHandler handler = new FileHandler(client);
                 //若头像发送成功，则继续保存其他信息
-                if (client.SendFile(infoPro.iconPath))
+                if (handler.SendFile(infoPro.iconPath))
                     goto SendMessage;
                 else
                     MessageBox.Show("无法发送头像！");
@@ -167,7 +168,7 @@ namespace 聊天软件_客户端
             if (client.SendMessage(infoPro.ToString()))
             {
                 //本地保存用户信息
-                UserInfo.SaveUserInfo(info);
+                UserInfo.SaveNewUserInfo(info);
                 MessageBox.Show("提交成功！");
                 this.Close();
             }

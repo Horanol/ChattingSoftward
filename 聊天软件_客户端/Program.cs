@@ -25,6 +25,7 @@ namespace 聊天软件_客户端
                 Application.Run(cf);
                 loginForm.Dispose();
             }
+
         }
     }
 }

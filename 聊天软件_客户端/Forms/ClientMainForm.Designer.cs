@@ -33,15 +33,16 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.sayingLabel = new System.Windows.Forms.Label();
-            this.JoeyBtn = new System.Windows.Forms.Button();
             this.ttBtn = new System.Windows.Forms.Button();
+            this.JoeyBtn = new System.Windows.Forms.Button();
+            this.sayingLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // iconBox
             // 
+            this.iconBox.Image = global::聊天软件_客户端.Properties.Resources.cantFindPicture;
             this.iconBox.Location = new System.Drawing.Point(8, 3);
             this.iconBox.Name = "iconBox";
             this.iconBox.Size = new System.Drawing.Size(120, 120);
@@ -57,7 +58,7 @@
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(161, 23);
             this.nameLabel.TabIndex = 1;
-            this.nameLabel.Text = "test";
+            this.nameLabel.Text = "并没有名字";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // listView1
@@ -99,15 +100,15 @@
             this.panel1.Size = new System.Drawing.Size(313, 565);
             this.panel1.TabIndex = 5;
             // 
-            // sayingLabel
+            // ttBtn
             // 
-            this.sayingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sayingLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.sayingLabel.Location = new System.Drawing.Point(143, 38);
-            this.sayingLabel.Name = "sayingLabel";
-            this.sayingLabel.Size = new System.Drawing.Size(157, 85);
-            this.sayingLabel.TabIndex = 5;
-            this.sayingLabel.Text = "今天是个好日子";
+            this.ttBtn.Location = new System.Drawing.Point(54, 315);
+            this.ttBtn.Name = "ttBtn";
+            this.ttBtn.Size = new System.Drawing.Size(75, 23);
+            this.ttBtn.TabIndex = 7;
+            this.ttBtn.Text = "ttBtn";
+            this.ttBtn.UseVisualStyleBackColor = true;
+            this.ttBtn.Click += new System.EventHandler(this.ttBtn_Click);
             // 
             // JoeyBtn
             // 
@@ -119,15 +120,15 @@
             this.JoeyBtn.UseVisualStyleBackColor = true;
             this.JoeyBtn.Click += new System.EventHandler(this.JoeyBtn_Click);
             // 
-            // ttBtn
+            // sayingLabel
             // 
-            this.ttBtn.Location = new System.Drawing.Point(54, 315);
-            this.ttBtn.Name = "ttBtn";
-            this.ttBtn.Size = new System.Drawing.Size(75, 23);
-            this.ttBtn.TabIndex = 7;
-            this.ttBtn.Text = "ttBtn";
-            this.ttBtn.UseVisualStyleBackColor = true;
-            this.ttBtn.Click += new System.EventHandler(this.ttBtn_Click);
+            this.sayingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sayingLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.sayingLabel.Location = new System.Drawing.Point(143, 38);
+            this.sayingLabel.Name = "sayingLabel";
+            this.sayingLabel.Size = new System.Drawing.Size(157, 85);
+            this.sayingLabel.TabIndex = 5;
+            this.sayingLabel.Text = "并没有写说说";
             // 
             // ClientMainForm
             // 

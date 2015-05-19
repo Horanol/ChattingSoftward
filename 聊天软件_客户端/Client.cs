@@ -13,12 +13,13 @@ namespace 聊天软件_客户端
     {
         private const int BufferSize = 8192;
         private byte[] buffer;
-        public string clientName;
         private NetworkStream streamToServer;
         //这样子写还没有新建client引用，只有要给引用分配对象时才建立引用
         private TcpClient client;
-        private IPAddress serverIPAddress;
-        private IPAddress clientIPAddress;
+
+        public string clientName;
+        public IPAddress serverIPAddress;
+        public IPAddress clientIPAddress;
         public Client()
         {
             //做好初始化工作
@@ -107,14 +108,11 @@ namespace 聊天软件_客户端
                 {
                     MessageHelper helper = new MessageHelper(str);
                     Protocol pro = helper.GetProtocol();
-
-                    if (pro.GetType() == typeof(MessageProtocol))
+                    if (pro != null)
                     {
-                        HandleMessage((MessageProtocol)pro);
-                    }
-                    else
-                    {
-                        HandleFileRequest((FileProtocol)pro);
+                        HandlerFactory fac = new HandlerFactory(this);
+                        IHandlerProtocol handler = fac.CreateHandler(pro);
+                        handler.HandlerProtocol(pro);
                     }
                 }
 
@@ -132,87 +130,5 @@ namespace 聊天软件_客户端
             }
         }
 
-        /// <summary>
-        /// 处理显示消息
-        /// </summary>
-        /// <param name="msgArray"></param>
-        private void HandleMessage(MessageProtocol pro)
-        {
-
-            //若是服务器单独给客户端发的消息
-            if (pro.sourceName.ToLower() == "server")
-            {
-                if (pro.content == "LoginAccepted")
-                {
-                    LogicController.CanLogin();
-                }
-                else if (pro.content == "LoginRefused")
-                {
-                    LogicController.CanNotLogin();
-                }
-                else if (pro.content == "UserNameAccepted")
-                {
-                    LogicController.CanUseTheUserName();
-                }
-                else if (pro.content == "UserNameRefused")
-                {
-                    LogicController.CanNotUseTheUserName();
-                }
-            }
-            //若是别的好友的消息
-            else
-            {
-                //pro.sourceName表示好友的名字,转发好友的消息
-                LogicController.PassMessage(pro.sourceName, pro.content);
-            }
-
-        }
-        private void HandleFileRequest(FileProtocol pro)
-        {
-
-        }
-        public bool SendFile(string filePath)
-        {
-            //发送协议到服务器
-            string fileName = Path.GetFileName(filePath);
-            FileProtocol pro = new FileProtocol(FileProtocol.FileRequestMode.Send, 8600, clientName, "server", fileName);
-            if(this.TryConnectToServer())
-                SendMessage(pro.ToString());
-
-            //在客户端监听8600端口，用于传送文件
-            TcpListener fileListener = new TcpListener(clientIPAddress, 8600);
-            fileListener.Start();
-            //中断，等待远程连接
-            TcpClient localClient = fileListener.AcceptTcpClient();
-
-            NetworkStream fileStream = localClient .GetStream();
-            //创建文件流
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            byte[] fileBuffer = new byte[1024];
-            int bytesRead;
-            //将文件流写入网络流
-            try
-            {
-                do
-                {
-                    bytesRead = fs.Read(fileBuffer, 0, fileBuffer.Length);
-                    fileStream.Write(fileBuffer, 0, bytesRead);
-                } while (bytesRead > 0);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-            finally
-            {
-                //把文件流，网络流，监听端和客户端都回收
-                fileStream.Dispose();
-                fs.Dispose();
-                localClient.Close();
-                fileListener.Stop();
-            }
-
-        }
     }
 }

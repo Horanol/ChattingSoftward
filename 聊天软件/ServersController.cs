@@ -9,30 +9,70 @@ namespace 聊天软件
     public static class ServersController
     {
         //以用户名为索引，每个用户对应 的server类为键值
-        private static Dictionary<string, Server> servers = new Dictionary<string,Server>();
+        private static Dictionary<string, Server> servers;
 
-        //static ServersController()
-        //{
-        //    servers = new Dictionary<string, Server>();
-        //}
+        static ServersController()
+        {
+            servers = new Dictionary<string, Server>();
+        }
         /// <summary>
         /// 负责把消息从用户一方转发给另一方
         /// </summary>
         /// <param name="sourceName"></param>
         /// <param name="message"></param>
         /// <param name="destinationName"></param>
-        public static void SendMessage(MessageProtocol pro)
+        public static bool SendMessage(MessageProtocol pro)
         {
             //若字典里有对应的server类
             if (servers.ContainsKey(pro.destinationName))
             {
                 //构造源消息协议头，让对应的server转发
-                servers[pro.destinationName].SendMessage(pro.ToString());
+                if (servers[pro.destinationName].SendMessage(pro.ToString()))
+                {
+                    return true;
+                }
             }
+            return false;
         }
+        /// <summary>
+        /// 转发好友请求
+        /// </summary>
+        /// <param name="pro"></param>
+        /// <returns></returns>
+        public static bool SendAddFriendsRequest(AddFriendsRequestProtocol pro)
+        {
+            if (servers.ContainsKey(pro.respondent))
+            {
+                if (servers[pro.respondent].SendMessage(pro.ToString()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// 转发好友请求响应
+        /// </summary>
+        /// <param name="pro"></param>
+        /// <returns></returns>
+        public static bool SendAddFriendsRespond(AddFriendsRespondProtocol pro)
+        {
+            if (servers.ContainsKey(pro.sponsor))
+            {
+                if (servers[pro.sponsor].SendMessage(pro.ToString()))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        ///退出登录，删除字典的有关内容
+        /// </summary>
+        /// <param name="name"></param>
         public static void SignOut(string name)
         {
-            //退出登录，删除字典的有关内容
+            
             if (servers != null)
             {
                 if (servers.ContainsKey(name))

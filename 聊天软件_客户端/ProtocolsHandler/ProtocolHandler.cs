@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace 聊天软件
+namespace 聊天软件_客户端
 {
     /// <summary>
     /// 用来分离出单条消息
@@ -63,98 +63,7 @@ namespace 聊天软件
     public class Protocol
     {
     }
-    /// <summary>
-    /// 文件协议类，这是构造xml格式消息的地方
-    /// </summary>    
-    public class FileProtocol : Protocol
-    {
-        public FileRequestMode mode { get; set; }
-        public int port { get; set; }
-        public string sourceName { get; set; }
-        public string destinationName { get; set; }
-        public string fileName { get; set; }
 
-        /// <summary>
-        /// 定义枚举类型表示发送和接收文件模式
-        /// </summary>
-        public enum FileRequestMode
-        {
-            Send = 0,
-            Receive,
-        }
-
-        public FileProtocol(FileRequestMode _mode, int _port, string _sourceName,string _destinationName,string _fileName)
-        {
-            this.mode = _mode;
-            this.port = _port;
-            this.sourceName = _sourceName;
-            this.destinationName = _destinationName;
-            this.fileName = _fileName;
-        }
-
-
-        public override string ToString()
-        {
-            return String.Format("<protocol><message type=\"{0}\" sourceName=\"{1}\" destinationName=\"{2}\" fileName=\"{3}\" mode=\"{4}\" port=\"{5}\" /></protocol>",
-                "file", sourceName,destinationName,fileName, mode, port);
-        }
-    }
-    /// <summary>
-    /// 消息协议类，这是构造xml格式消息的地方
-    /// </summary>
-    public class MessageProtocol : Protocol
-    {
-        public string sourceName { get; set; }
-        public string destinationName { get; set; }
-        public string content { get; set; }
-        public MessageProtocol(string _sourceName, string _destinationName, string _message)
-        {
-            this.sourceName = _sourceName;
-            this.destinationName = _destinationName;
-            this.content = _message;
-        }
-        //构造xml格式消息
-        public override string ToString()
-        {
-            return String.Format("<protocol><message type=\"{0}\" sourceName=\"{1}\" destinationName=\"{2}\" content=\"{3}\" /></protocol>",
-                "conversation", sourceName, destinationName, content);
-        }
-
-    }
-    public class SignInProtocol : Protocol
-    {
-        public string userName { get; set; }
-        public string password { get; set; }
-        public SignInProtocol(string _userName, string _password)
-        {
-            userName = _userName;
-            password = _password;
-        }
-        public override string ToString()
-        {
-            return String.Format("<protocol><message type=\"{0}\" userName=\"{1}\" password=\"{2}\" /></protocol>",
-                "signIn", userName, password);
-        }
-    }
-    public class UserDetailInfoProtocol : Protocol
-    {
-        public string userName;
-        public string password;
-        public string sayings;
-        public string iconPath;
-        public UserDetailInfoProtocol(UserDetailInfo info)
-        {
-            userName = info.userName;
-            password = info.password;
-            sayings = info.sayings;
-            iconPath = info.iconPath;
-        }
-        public override string ToString()
-        {
-            return String.Format("<protocol><message type=\"{0}\" userName=\"{1}\" password=\"{2}\" saying=\"{3}\" iconPath=\"{4}\" /></protocol>",
-                         "UserDetailInfo", userName, password, sayings, iconPath);
-        }
-    }
     /// <summary>
     /// 该帮助类把xml格式的协议消息转换成强类型协议
     /// </summary>
@@ -170,12 +79,12 @@ namespace 聊天软件
             messageNode = root.SelectSingleNode("message");
         }
         /// <summary>
-        /// 返回强类型协议，失败返回null
+        /// 解析xml格式消息，返回强类型协议，失败返回null
         /// </summary>
         /// <returns>Protocol 或 null</returns>
         public Protocol GetProtocol()
         {
-            if (messageNode.Attributes["type"].Value == "conversation")
+            if (messageNode.Attributes["type"].Value == "Conversation")
             {
                 string sourceName = messageNode.Attributes["sourceName"].Value;
                 string destinationName = messageNode.Attributes["destinationName"].Value;
@@ -183,7 +92,7 @@ namespace 聊天软件
                 //返回消息类型
                 return new MessageProtocol(sourceName, destinationName, content);
             }
-            else if (messageNode.Attributes["type"].Value == "file")
+            else if (messageNode.Attributes["type"].Value == "File")
             {
                 string fileName = messageNode.Attributes["fileName"].Value;
                 int port = Convert.ToInt32(messageNode.Attributes["port"].Value);
@@ -193,9 +102,9 @@ namespace 聊天软件
 
                 FileProtocol.FileRequestMode requestMode = (mode == "send" ? FileProtocol.FileRequestMode.Send : FileProtocol.FileRequestMode.Receive);
                 //返回文件类型
-                return new FileProtocol(requestMode,port,sourceName,destinationName,fileName);
+                return new FileProtocol(requestMode, port, sourceName, destinationName, fileName);
             }
-            else if (messageNode.Attributes["type"].Value == "signIn")
+            else if (messageNode.Attributes["type"].Value == "SignIn")
             {
                 string userName = messageNode.Attributes["userName"].Value;
                 string password = messageNode.Attributes["password"].Value;
@@ -208,8 +117,35 @@ namespace 聊天软件
                 string password = messageNode.Attributes["password"].Value;
                 string saying = messageNode.Attributes["saying"].Value;
                 string iconPath = messageNode.Attributes["iconPath"].Value;
-                UserDetailInfo info = new UserDetailInfo(userName, password, saying, iconPath);
+                UserDetailInfo info = new UserDetailInfo(userName, password, saying, iconPath, null);
                 return new UserDetailInfoProtocol(info);
+            }
+            else if (messageNode.Attributes["type"].Value == "UserPublicInfo")
+            {
+                string userName = messageNode.Attributes["userName"].Value;
+                string saying = messageNode.Attributes["saying"].Value;
+                PublicUserInfo info = new PublicUserInfo(userName, "", saying);
+                return new UserPublicInfoProtocol(info);
+            }
+            else if (messageNode.Attributes["type"].Value == "AddFriendsRequest")
+            {
+                string sponsor = messageNode.Attributes["sponsor"].Value;
+                string respondent = messageNode.Attributes["respondent"].Value;
+                return new AddFriendsRequestProtocol(sponsor, respondent);
+            }
+            else if (messageNode.Attributes["type"].Value == "AddFriendsRespond")
+            {
+                string sponsor = messageNode.Attributes["sponsor"].Value;
+                string respondent = messageNode.Attributes["respondent"].Value;
+                string respond = messageNode.Attributes["respond"].Value;
+                return new AddFriendsRespondProtocol(sponsor, respondent,respond);
+            }
+            else if (messageNode.Attributes["type"].Value == "SearchFriends")
+            {
+                string searchName = messageNode.Attributes["searchName"].Value;
+                string searchAge = messageNode.Attributes["searchAge"].Value;
+                string searchSex = messageNode.Attributes["searchSex"].Value;
+                return new SearchFriendsProtocol(searchName, searchSex , searchAge);
             }
             else
                 return null;
