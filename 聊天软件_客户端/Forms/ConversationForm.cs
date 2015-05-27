@@ -48,6 +48,7 @@ namespace 聊天软件_客户端
         {
             MessageProtocol pro = new MessageProtocol(sourceName, friendsName, msg);
             string newMsg = pro.ToString();
+            MessageBox.Show(newMsg);
             if (myClient.TryConnectToServer())
             {
                 if (myClient.SendMessage(newMsg))

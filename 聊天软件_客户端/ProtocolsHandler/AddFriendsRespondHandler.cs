@@ -20,6 +20,8 @@ namespace 聊天软件_客户端
             {
                 System.Windows.Forms.MessageBox.Show(pro.respondent + "    已经接受了你的好友请求");
                 UserInfo.AddFriend(pro.sponsor, pro.respondent);
+                ClientMainForm.OnUpdateFriendsList();
+
             }
         }
     }

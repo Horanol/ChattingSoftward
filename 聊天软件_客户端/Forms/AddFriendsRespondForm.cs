@@ -19,7 +19,7 @@ namespace 聊天软件_客户端
         //{
         //    InitializeComponent();
         //}
-        public AddFriendsRespondForm(Client _client,AddFriendsRequestProtocol _pro)
+        public AddFriendsRespondForm(Client _client, AddFriendsRequestProtocol _pro)
         {
             InitializeComponent();
             myClient = _client;
@@ -27,23 +27,29 @@ namespace 聊天软件_客户端
         }
 
         /// <summary>
-        /// 点击确认按钮时，向服务器发送好友确认信息，并在本地的UserInfo中修改好友关系
+        /// 点击确认按钮时，向服务器发送好友确认信息，
+        /// 向服务器发送好友信息请求
+        /// 并在本地的UserInfo中修改好友关系
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void acceptBtn_Click(object sender, EventArgs e)
         {
-            AddFriendsRespondProtocol respondPro = new AddFriendsRespondProtocol(pro.sponsor,pro.respondent, "Accepted");
+            AddFriendsRespondProtocol respondPro = new AddFriendsRespondProtocol(pro.sponsor, pro.respondent, "Accepted");
             if (myClient.TryConnectToServer())
             {
-                if (!myClient.SendMessage(respondPro.ToString()))
-                    MessageBox.Show("无法发送！");
-                else
+                if (myClient.SendMessage(respondPro.ToString()))
                 {
+                    //发送好友信息请求
+                    GetFriendsInfoProtocol getPro = new GetFriendsInfoProtocol(pro.sponsor);
+                    myClient.SendMessage(getPro.ToString());
                     //修改好友关系
                     UserInfo.AddFriend(pro.respondent, pro.sponsor);
+
                     this.Close();
                 }
+                else
+                    MessageBox.Show("无法发送！");
             }
             else
                 MessageBox.Show("无法连接服务器！");

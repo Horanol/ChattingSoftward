@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CostomizedControls\CustomizedControl.cs" />
+    <Compile Include="CostomizedControls\Customized_FriendsItemPanel.cs" />
     <Compile Include="Forms\AddFriendsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,15 +83,17 @@
     <Compile Include="ProtocolsHandler\AddFriendsRequestHandler.cs" />
     <Compile Include="ProtocolsHandler\AddFriendsRespondHandler.cs" />
     <Compile Include="ProtocolsHandler\FileHandler.cs" />
+    <Compile Include="ProtocolsHandler\GetFriendsInfoHandler.cs" />
     <Compile Include="ProtocolsHandler\HandlerFactory.cs" />
     <Compile Include="ProtocolsHandler\IHandlerProtocol.cs" />
     <Compile Include="ProtocolsHandler\MessageHandler.cs" />
     <Compile Include="ProtocolsHandler\SaveFriendsInfoHandler.cs" />
-    <Compile Include="ProtocolsHandler\SearchFriendsHandler.cs" />
     <Compile Include="ProtocolsHandler\ProtocolHandler.cs" />
+    <Compile Include="ProtocolsHandler\SearchFriendsHandler.cs" />
     <Compile Include="Protocols\AddFriendsRequestProtocol.cs" />
     <Compile Include="Protocols\AddFriendsRespondProtocol.cs" />
     <Compile Include="Protocols\FileProtocol.cs" />
+    <Compile Include="Protocols\GetFriendsInfoProtocol.cs" />
     <Compile Include="Protocols\MessageProtocol.cs" />
     <Compile Include="Protocols\SearchFriendsProtocol.cs" />
     <Compile Include="Protocols\SignInProtocol.cs" />
@@ -175,6 +179,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\草泥马.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\halfTranparent.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

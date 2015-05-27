@@ -47,6 +47,7 @@
     <Compile Include="ProtocolsHandler\AddFriendsRequestHandler.cs" />
     <Compile Include="ProtocolsHandler\AddFriendsRespondHandler.cs" />
     <Compile Include="ProtocolsHandler\FileHandler.cs" />
+    <Compile Include="ProtocolsHandler\GetFriendsInfoHandler.cs" />
     <Compile Include="ProtocolsHandler\HandlerFactory.cs" />
     <Compile Include="ProtocolsHandler\IHandlerProtocol.cs" />
     <Compile Include="ProtocolsHandler\MessageHandler.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Protocols\AddFriendsRequestProtocol.cs" />
     <Compile Include="Protocols\AddFriendsRespondProtocol.cs" />
     <Compile Include="Protocols\FileProtocol.cs" />
+    <Compile Include="Protocols\GetFriendsInfoProtocol.cs" />
     <Compile Include="Protocols\MessageProtocol.cs" />
     <Compile Include="Protocols\SearchFriendsProtocol.cs" />
     <Compile Include="Protocols\SignInProtocol.cs" />

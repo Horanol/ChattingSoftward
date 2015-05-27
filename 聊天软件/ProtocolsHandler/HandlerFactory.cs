@@ -31,6 +31,10 @@ namespace 聊天软件
             {
                 return new SaveInfoHandler();
             }
+            else if (pro.GetType() == typeof(GetFriendsInfoProtocol))
+            {
+                return new GetFriendsInfoHandler(myServer);
+            }
             else if (pro.GetType() == typeof(SearchFriendsProtocol))
             {
                 return new SearchFriendsHandler(myServer);

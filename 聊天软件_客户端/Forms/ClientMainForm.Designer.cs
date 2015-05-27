@@ -30,14 +30,13 @@
         {
             this.iconBox = new System.Windows.Forms.PictureBox();
             this.nameLabel = new System.Windows.Forms.Label();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.ttBtn = new System.Windows.Forms.Button();
-            this.JoeyBtn = new System.Windows.Forms.Button();
+            this.addFriendsBtn = new System.Windows.Forms.Button();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.testBtn = new System.Windows.Forms.Button();
             this.sayingLabel = new System.Windows.Forms.Label();
+            this.friendsListPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // iconBox
@@ -54,95 +53,80 @@
             // 
             this.nameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nameLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.nameLabel.Location = new System.Drawing.Point(143, 9);
+            this.nameLabel.Location = new System.Drawing.Point(140, 9);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(161, 23);
             this.nameLabel.TabIndex = 1;
             this.nameLabel.Text = "并没有名字";
             this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // listView1
+            // addFriendsBtn
             // 
-            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.addFriendsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.addFriendsBtn.Location = new System.Drawing.Point(19, 630);
+            this.addFriendsBtn.Name = "addFriendsBtn";
+            this.addFriendsBtn.Size = new System.Drawing.Size(80, 23);
+            this.addFriendsBtn.TabIndex = 4;
+            this.addFriendsBtn.Text = "添加好友";
+            this.addFriendsBtn.UseVisualStyleBackColor = true;
+            this.addFriendsBtn.Click += new System.EventHandler(this.addFriendsBtn_Click);
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView1.Location = new System.Drawing.Point(7, 129);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(297, 374);
-            this.listView1.TabIndex = 3;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.mainPanel.Controls.Add(this.testBtn);
+            this.mainPanel.Controls.Add(this.sayingLabel);
+            this.mainPanel.Controls.Add(this.friendsListPanel);
+            this.mainPanel.Controls.Add(this.addFriendsBtn);
+            this.mainPanel.Controls.Add(this.iconBox);
+            this.mainPanel.Controls.Add(this.nameLabel);
+            this.mainPanel.Location = new System.Drawing.Point(6, 5);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(310, 660);
+            this.mainPanel.TabIndex = 5;
             // 
-            // button1
+            // testBtn
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(8, 518);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "添加好友";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.ttBtn);
-            this.panel1.Controls.Add(this.JoeyBtn);
-            this.panel1.Controls.Add(this.sayingLabel);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.listView1);
-            this.panel1.Controls.Add(this.iconBox);
-            this.panel1.Controls.Add(this.nameLabel);
-            this.panel1.Location = new System.Drawing.Point(6, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(313, 565);
-            this.panel1.TabIndex = 5;
-            // 
-            // ttBtn
-            // 
-            this.ttBtn.Location = new System.Drawing.Point(54, 315);
-            this.ttBtn.Name = "ttBtn";
-            this.ttBtn.Size = new System.Drawing.Size(75, 23);
-            this.ttBtn.TabIndex = 7;
-            this.ttBtn.Text = "ttBtn";
-            this.ttBtn.UseVisualStyleBackColor = true;
-            this.ttBtn.Click += new System.EventHandler(this.ttBtn_Click);
-            // 
-            // JoeyBtn
-            // 
-            this.JoeyBtn.Location = new System.Drawing.Point(54, 248);
-            this.JoeyBtn.Name = "JoeyBtn";
-            this.JoeyBtn.Size = new System.Drawing.Size(75, 23);
-            this.JoeyBtn.TabIndex = 6;
-            this.JoeyBtn.Text = "JoeyBtn";
-            this.JoeyBtn.UseVisualStyleBackColor = true;
-            this.JoeyBtn.Click += new System.EventHandler(this.JoeyBtn_Click);
+            this.testBtn.Location = new System.Drawing.Point(155, 630);
+            this.testBtn.Name = "testBtn";
+            this.testBtn.Size = new System.Drawing.Size(75, 23);
+            this.testBtn.TabIndex = 7;
+            this.testBtn.Text = "test";
+            this.testBtn.UseVisualStyleBackColor = true;
             // 
             // sayingLabel
             // 
-            this.sayingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sayingLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.sayingLabel.Location = new System.Drawing.Point(143, 38);
+            this.sayingLabel.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.sayingLabel.Location = new System.Drawing.Point(135, 46);
             this.sayingLabel.Name = "sayingLabel";
-            this.sayingLabel.Size = new System.Drawing.Size(157, 85);
-            this.sayingLabel.TabIndex = 5;
-            this.sayingLabel.Text = "并没有写说说";
+            this.sayingLabel.Size = new System.Drawing.Size(166, 77);
+            this.sayingLabel.TabIndex = 6;
+            this.sayingLabel.Text = "并没有说说";
+            // 
+            // friendsListPanel
+            // 
+            this.friendsListPanel.AutoScroll = true;
+            this.friendsListPanel.AutoScrollMinSize = new System.Drawing.Size(10, 0);
+            this.friendsListPanel.Location = new System.Drawing.Point(5, 130);
+            this.friendsListPanel.Name = "friendsListPanel";
+            this.friendsListPanel.Size = new System.Drawing.Size(300, 490);
+            this.friendsListPanel.TabIndex = 5;
             // 
             // ClientMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 582);
-            this.Controls.Add(this.panel1);
-            this.MaximumSize = new System.Drawing.Size(500, 700);
+            this.ClientSize = new System.Drawing.Size(328, 673);
+            this.Controls.Add(this.mainPanel);
+            this.MaximumSize = new System.Drawing.Size(500, 750);
             this.MinimumSize = new System.Drawing.Size(344, 450);
             this.Name = "ClientMainForm";
             this.Text = "六度聊天软件";
             this.Load += new System.EventHandler(this.ClientMainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.iconBox)).EndInit();
-            this.panel1.ResumeLayout(false);
+            this.mainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -151,12 +135,11 @@
 
         private System.Windows.Forms.PictureBox iconBox;
         private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button addFriendsBtn;
+        private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Panel friendsListPanel;
         private System.Windows.Forms.Label sayingLabel;
-        private System.Windows.Forms.Button ttBtn;
-        private System.Windows.Forms.Button JoeyBtn;
+        private System.Windows.Forms.Button testBtn;
     }
 }
 

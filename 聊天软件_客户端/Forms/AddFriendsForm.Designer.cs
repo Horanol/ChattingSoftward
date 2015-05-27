@@ -41,7 +41,6 @@
             this.inputNameBox.Name = "inputNameBox";
             this.inputNameBox.Size = new System.Drawing.Size(401, 29);
             this.inputNameBox.TabIndex = 0;
-            this.inputNameBox.TextChanged += new System.EventHandler(this.inputNameBox_TextChanged);
             // 
             // searchBtn
             // 

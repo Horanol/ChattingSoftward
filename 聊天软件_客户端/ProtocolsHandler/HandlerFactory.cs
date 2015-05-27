@@ -23,7 +23,12 @@ namespace 聊天软件_客户端
             {
                 return new FileHandler(myClient);
             }
-            //接受到服务器发来的查找好友结果
+            //收到好友信息请求回应时
+            else if (pro.GetType() == typeof(GetFriendsInfoProtocol))
+            {
+                return new GetFriendsInfoHandler();
+            }
+            //收到查找好友请求回应时，在查找好友面板上显示好友信息
             else if (pro.GetType() == typeof(SearchFriendsProtocol))
             {
                 return new SearchFriendsHandler();

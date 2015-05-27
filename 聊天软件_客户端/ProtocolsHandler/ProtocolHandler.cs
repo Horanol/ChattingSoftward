@@ -147,6 +147,11 @@ namespace 聊天软件_客户端
                 string searchSex = messageNode.Attributes["searchSex"].Value;
                 return new SearchFriendsProtocol(searchName, searchSex , searchAge);
             }
+            else if (messageNode.Attributes["type"].Value == "GetFriendsInfo")
+            {
+                string friendsName = messageNode.Attributes["friendsName"].Value;
+                return new GetFriendsInfoProtocol(friendsName);
+            }
             else
                 return null;
         }
