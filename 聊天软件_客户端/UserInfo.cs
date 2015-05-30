@@ -351,7 +351,7 @@ namespace 聊天软件_客户端
                             friendsNames[i] = friend.InnerText;
                             i++;
                         }
-                        //修改字典中该用户的信息
+                        //修改字典中该用户的信息，没有friends的话friendsNames为null
                         UserDetailInfo info = new UserDetailInfo(name, password, saying, iconPath, friendsNames);
                         userInfoDictionary[userName] = info;
                         break;

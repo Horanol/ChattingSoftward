@@ -156,7 +156,7 @@ namespace 聊天软件_客户端
             {
                 FileHandler handler = new FileHandler(client);
                 //若头像发送成功，则继续保存其他信息
-                if (handler.SendFile(infoPro.iconPath))
+                if (handler.SendFile(client.clientIPAddress.ToString(),"server",info.iconPath))
                     goto SendMessage;
                 else
                     MessageBox.Show("无法发送头像！");

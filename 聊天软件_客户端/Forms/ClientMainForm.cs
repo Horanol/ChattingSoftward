@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Media;
 namespace 聊天软件_客户端
 {
     public partial class ClientMainForm : Form
@@ -16,15 +9,25 @@ namespace 聊天软件_客户端
         private Client myClient;
         private PublicUserInfo? userInfo;
         private int index = 0;
+        private int notifyIconChangeIndex;
         private Dictionary<string, Customized_FriendsItemPanel> itemPanels;
 
-        //一个静态Action委托，用于调用创建好友确认窗体的方法
+        private AddFriendsForm adForm;
+
+        private Dictionary<string, List<string>> conversationBufferDictionary;
+
+        //用于创建好友确认窗口
         public static Action<Client, AddFriendsRequestProtocol> OnShowRespondRequestForm;
         //用于创建会话窗口
         public static Action<string> OnShowConversationForm;
+        //用于创建文件接受确认窗口
+        public static Action<SendFileRequestProtocol> OnShowFileRequestForm;
         //更新好友列表
         public static Action OnUpdateFriendsList;
+        //接受新的未接消息
+        public static Action<string, string> OnReceiveMsgInMainPanel;
 
+        #region 与主面板初始化相关方法
         public ClientMainForm()
         {
             InitializeComponent();
@@ -33,22 +36,31 @@ namespace 聊天软件_客户端
         {
             myClient = client;
             itemPanels = new Dictionary<string, Customized_FriendsItemPanel>();
+            conversationBufferDictionary = new Dictionary<string, List<string>>();
+
             InitializeComponent();
-            OnShowRespondRequestForm += ShowRespondRequestForm;
-            OnShowConversationForm += ShowConversationForm;
-            OnUpdateFriendsList += UpdateFriendsList;
+
         }
         private void ClientMainForm_Load(object sender, EventArgs e)
         {
             InitializeUserInfo();
             InitializeFriendsList();
+            GetOfflineMsg();
+
+            OnShowRespondRequestForm += ShowRespondRequestForm;
+            OnShowConversationForm += ShowConversationForm;
+            OnUpdateFriendsList += UpdateFriendsList;
+            OnReceiveMsgInMainPanel += ReceiveMsgInMainPanel;
+            OnShowFileRequestForm += ShowFileRequestForm;
         }
         private void InitializeUserInfo()
         {
             userInfo = UserInfo.GetPublicUserInfo(myClient.clientName);
             if (userInfo != null)//或写成info.hasValue
             {
-                this.nameLabel.Text = userInfo.Value.name;//注意要通过Value获取值
+                //设置名字标签和托盘图标的提示语
+                this.nameLabel.Text = userInfo.Value.name;
+                this.notifyIcon.Text = "昵称：" + userInfo.Value.name;
 
                 if (userInfo.Value.saying != "")
                     this.sayingLabel.Text = userInfo.Value.saying;
@@ -65,21 +77,31 @@ namespace 聊天软件_客户端
             {
                 this.friendsListPanel.Controls.Clear();
                 PrivateUserInfo? info = UserInfo.GetPrivateUserInfo(myClient.clientName);
-                PublicUserInfo?[] friendsInfo = new PublicUserInfo?[info.Value.friendsName.Length];
                 if (info != null)
                 {
-                    for (int i = 0; i < friendsInfo.Length; i++)
+                    if (info.Value.friendsName != null)
                     {
-                        friendsInfo[i] = UserInfo.GetPublicFriendsInfo(info.Value.friendsName[i]);
+                        PublicUserInfo?[] friendsInfo = new PublicUserInfo?[info.Value.friendsName.Length];
+
+                        for (int i = 0; i < friendsInfo.Length; i++)
+                        {
+                            friendsInfo[i] = UserInfo.GetPublicFriendsInfo(info.Value.friendsName[i]);
+                        }
+                        GenerateFriendsItems(friendsInfo);
                     }
                 }
-                GenerateFriendsItems(friendsInfo);
+
             }
             catch
             {
- 
+
             }
 
+        }
+        private void GetOfflineMsg()
+        {
+            MessageProtocol pro = new MessageProtocol("client", "", "ReadyToReceiveOfflineMsg");
+            myClient.SendMessage(pro.ToString());
         }
         public void UpdateFriendsList()
         {
@@ -103,25 +125,10 @@ namespace 聊天软件_客户端
             this.ResumeLayout();
             this.PerformLayout();
         }
+        #endregion
 
-        private void addFriendsBtn_Click(object sender, EventArgs e)
-        {
-            AddFriendsForm adForm = new AddFriendsForm(myClient);
-            adForm.Show();
-        }
 
-        private void JoeyBtn_Click(object sender, EventArgs e)
-        {
-            ConversationForm JoeyForm = new ConversationForm("Joey", "tt", myClient);
-            JoeyForm.Show();
-        }
-
-        private void ttBtn_Click(object sender, EventArgs e)
-        {
-            ConversationForm ttForm = new ConversationForm("tt", "Joey", myClient);
-            ttForm.Show();
-        }
-
+        #region 由主面板创建的其他窗口方法
         private void ShowRespondRequestForm(Client _client, AddFriendsRequestProtocol _pro)
         {
             //在监听线程里调用这个委托方法
@@ -146,12 +153,122 @@ namespace 聊天软件_客户端
                 }),
                 new object[] { _client, _pro });
         }
-
         public void ShowConversationForm(string friendsName)
         {
-            ConversationForm newForm = new ConversationForm(myClient.clientName, friendsName, myClient);
-            newForm.Show();
+            //确保只出现一个对话窗口
+            if (!LogicController.dictionary.ContainsKey(friendsName))
+            {
+                ConversationForm newForm = new ConversationForm(myClient.clientName, friendsName);
+                newForm.Show();
+            }
+            else
+            {
+                if (LogicController.dictionary[friendsName].WindowState == FormWindowState.Minimized)
+                {
+                    LogicController.dictionary[friendsName].WindowState = FormWindowState.Normal;
+                }
+                LogicController.dictionary[friendsName].Focus();
+            }
         }
+        private void ShowReceivedMsgForms()
+        {
+            foreach (string name in conversationBufferDictionary.Keys)
+            {
+                ConversationForm newForm = new ConversationForm(myClient.clientName, name);
+                newForm.Show();
+                foreach (string msg in conversationBufferDictionary[name])
+                {
+                    newForm.ReceiveMessage(msg);
+                }
+            }
+        }
+        private void addFriendsBtn_Click(object sender, EventArgs e)
+        {
+            if (adForm == null)
+                adForm = new AddFriendsForm(myClient);
+            adForm.Show();
+        }
+        private void ShowFileRequestForm(SendFileRequestProtocol pro)
+        {
+            this.Invoke(new Action(delegate()
+            {
+                FileRequestForm form = new FileRequestForm(pro);
+                form.Show();
+            }));
+        }
+        #endregion
+
+        #region 作用于主面板上的方法
+        private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.Show();
+                this.WindowState = FormWindowState.Normal;
+            }
+            if (blinkTimer.Enabled == true)
+            {
+                blinkTimer.Enabled = false;
+                this.notifyIcon.Icon = (System.Drawing.Icon)聊天软件_客户端.Properties.Resources.mainIcon;
+                ShowReceivedMsgForms();
+                conversationBufferDictionary.Clear();
+
+            }
+        }
+        private void ClientMainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.Hide();
+            }
+        }
+        //主面板接受到消息后，缓存到字典中
+        public void ReceiveMsgInMainPanel(string friendsName, string msg)
+        {
+            if (conversationBufferDictionary.ContainsKey(friendsName))
+            {
+                conversationBufferDictionary[friendsName].Add(msg);
+            }
+            else
+            {
+                List<string> newStr = new List<string>();
+                newStr.Add(msg);
+                conversationBufferDictionary.Add(friendsName, newStr);
+            }
+            ShowNewMsgEffect();
+        }
+        private void ShowNewMsgEffect()
+        {
+            this.Invoke(new Action(delegate()
+            {
+                //图标闪动
+                blinkTimer.Start();
+                //播放消息音效
+                SoundPlayer player = new SoundPlayer();
+                player.SoundLocation = @"E:\CPlusProject\LearnTCPProgramming\聊天软件_客户端\sounds\msg.wav";
+                player.Play();
+            }));
+
+        }
+        private void blinkTimer_Tick(object sender, EventArgs e)
+        {
+            if (notifyIconChangeIndex == 0)
+            {
+                this.notifyIcon.Icon = (System.Drawing.Icon)聊天软件_客户端.Properties.Resources.mainIcon;
+                notifyIconChangeIndex = 1;
+                return;
+            }
+            else
+            {
+                this.notifyIcon.Icon = (System.Drawing.Icon)聊天软件_客户端.Properties.Resources.tranparentIcon;
+                notifyIconChangeIndex = 0;
+                return;
+            }
+        }
+        #endregion
+
+
+
 
 
 

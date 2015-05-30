@@ -38,10 +38,20 @@ namespace 聊天软件
                 //当处理SignIn请求时，判断用户名和密码是否正确
                 if (UserInfo.SignIn(pro.userName, pro.password))
                 {
-                    myServer.clientName = pro.userName;
-                    ServersController.SignIn(myServer.clientName, myServer);
-                    MessageProtocol acceptPro = new MessageProtocol("server", "", "LoginAccepted");
-                    myServer.SendMessage(acceptPro.ToString());
+                    //若用户已经登录了，返回登录失败
+                    if (ServersController.CheckClientIsExist(pro.userName))
+                    {
+                        MessageProtocol refusePro = new MessageProtocol("server", "", "AlreadyLogin");
+                        myServer.SendMessage(refusePro.ToString());
+                    }
+                    else
+                    {
+                        myServer.clientName = pro.userName;
+                        ServersController.SignIn(myServer.clientName, myServer);
+
+                        MessageProtocol acceptPro = new MessageProtocol("server", "", "LoginAccepted");
+                        myServer.SendMessage(acceptPro.ToString());
+                    }
                 }
                 else//登录失败返回失败信息
                 {

@@ -21,6 +21,7 @@ namespace 聊天软件_客户端
         //声明静态的委托，使得其他类可以调用委托绑定的方法
         public static Action OnAcceptLogin;
         public static Action OnRefuseLogin;
+        public static Action OnAlreadyLogin;
 
         public RegisterForm registerForm;
         public LoginForm()
@@ -45,6 +46,7 @@ namespace 聊天软件_客户端
             //绑定登录和拒绝登录方法
             OnAcceptLogin += AcceptLogin;
             OnRefuseLogin += RefuseLogin;
+            OnAlreadyLogin += AlreadyLogin;
         }
         private void IniatializeContection()
         {
@@ -79,7 +81,7 @@ namespace 聊天软件_客户端
 
             }
         }
-        public void AcceptLogin()
+        private void AcceptLogin()
         {
             //不能用新线程打开新窗口，这样线程结束后窗口会关闭
             //主线程的窗口不能关闭，只能隐藏
@@ -90,11 +92,14 @@ namespace 聊天软件_客户端
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-        public void RefuseLogin()
+        private void RefuseLogin()
         {
             MessageBox.Show("用户名或密码错误！");
         }
-
+        private void AlreadyLogin()
+        {
+            MessageBox.Show("当前用户已经登录！");
+        }
         private void signUpBtn_Click(object sender, EventArgs e)
         {
             if (registerForm == null || registerForm.IsDisposed)

@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 namespace 聊天软件
 {
-    public class FileHandler:IHandlerProtocol
+    public class FileHandler : IHandlerProtocol
     {
         private const int BufferSize = 8192;
         private byte[] buffer;
@@ -21,19 +21,24 @@ namespace 聊天软件
         public void HandlerProtocol(Protocol _pro)
         {
             FileProtocol pro = (FileProtocol)_pro;
-            if (pro.sourceName == myServer.clientName)
+            if (pro.destinationName == "server")//若是当前客户端发给服务器的文件
             {
-                if (pro.destinationName == "server")//若是当前客户端发给服务器的文件
+                if (!Directory.Exists(Environment.CurrentDirectory + "\\IconBuffer"))
                 {
-                    if (!Directory.Exists(Environment.CurrentDirectory + "\\IconBuffer"))
-                    {
-                        Directory.CreateDirectory(Environment.CurrentDirectory + "\\IconBuffer");
-                    }
-                    //设置保存目录到fileName里
-                    pro.fileName = Environment.CurrentDirectory + "\\IconBuffer\\" + pro.fileName;
-                    ReceiveFile(pro);
+                    Directory.CreateDirectory(Environment.CurrentDirectory + "\\IconBuffer");
+                }
+                //设置保存目录到fileName里
+                pro.fileName = Environment.CurrentDirectory + "\\IconBuffer\\" + pro.fileName;
+                ReceiveFile(pro);
+            }
+            else //若是用户对用户发的文件，给目的用户发送这个FileProtocol
+            {
+                if (!ServersController.SendFileTransformInfo(pro)) //若用户当前不在线，返回否
+                {
+                    return;
                 }
             }
+
 
         }
         /// <summary>
@@ -42,7 +47,7 @@ namespace 聊天软件
         /// <param name="pro"></param>
         private void ReceiveFile(FileProtocol pro)
         {
-            IPEndPoint clientIPEndPoint = myServer . remoteEndPoint as IPEndPoint;
+            IPEndPoint clientIPEndPoint = myServer.remoteEndPoint as IPEndPoint;
             IPEndPoint newFileEndPoint = new IPEndPoint(clientIPEndPoint.Address, pro.port);
             TcpClient newFileClient;
             //尝试连接客户端的文件传输端口

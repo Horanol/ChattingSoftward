@@ -13,6 +13,7 @@ namespace 聊天软件_客户端
         private Client myClient;
         private byte[] buffer;
         private const int BufferSize = 8192;
+        public static string saveFilePath = "";
         public FileHandler(Client _client)
         {
             myClient = _client;
@@ -38,14 +39,30 @@ namespace 聊天软件_客户端
                     ReceiveFile(pro);
                 }
             }
+            //若是用户给用户发送的文件
+            else
+            {
+                pro.fileName = saveFilePath;
+                ReceiveFile(pro);
+            }
         }
         /// <summary>
-        /// 客户端接收文件,pro.fileName里面保存了文件保存的目录
+        /// 客户端接收文件,
+        /// pro.fileName里面保存了文件保存的目录,
+        /// pro.sourceName 为要接受的文件源ip地址，或者是"server"表示从服务器接受的文件
         /// </summary>
         /// <param name="pro"></param>
         private void ReceiveFile(FileProtocol pro)
         {
-            IPEndPoint newFileEndPoint = new IPEndPoint(myClient.serverIPAddress, pro.port);
+            IPEndPoint newFileEndPoint;
+            if (pro.sourceName == "server")
+            {
+                 newFileEndPoint = new IPEndPoint(myClient.serverIPAddress, pro.port);
+            }
+            else
+            {
+                newFileEndPoint = new IPEndPoint(IPAddress.Parse(pro.sourceName), pro.port);
+            }
             TcpClient newFileClient;
             //尝试连接客户端的文件传输端口
             try
@@ -83,11 +100,20 @@ namespace 聊天软件_客户端
                 newFileClient.Close();
             }
         }
-        public bool SendFile(string filePath)
+        /// <summary>
+        /// 客户端发送文件，
+        /// sourceName保存发送方的ip地址，
+        /// destinationName 为对方的昵称，
+        /// filePath里为要发送的文件的位置
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="destinationName"></param>
+        /// <returns></returns>
+        public bool SendFile(string sourceName,string destinationName,string filePath)
         {
             //发送协议到服务器
             string fileName = Path.GetFileName(filePath);
-            FileProtocol pro = new FileProtocol(FileProtocol.FileRequestMode.Send, 8600, myClient.clientName, "server", fileName);
+            FileProtocol pro = new FileProtocol(FileProtocol.FileRequestMode.Send, 8600, sourceName, destinationName, fileName);
             if (myClient.TryConnectToServer())
                 myClient.SendMessage(pro.ToString());
 

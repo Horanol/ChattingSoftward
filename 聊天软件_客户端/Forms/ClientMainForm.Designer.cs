@@ -28,26 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.iconBox = new System.Windows.Forms.PictureBox();
+            this.components = new System.ComponentModel.Container();
             this.nameLabel = new System.Windows.Forms.Label();
             this.addFriendsBtn = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
-            this.testBtn = new System.Windows.Forms.Button();
             this.sayingLabel = new System.Windows.Forms.Label();
             this.friendsListPanel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
+            this.iconBox = new System.Windows.Forms.PictureBox();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.blinkTimer = new System.Windows.Forms.Timer(this.components);
             this.mainPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
             this.SuspendLayout();
-            // 
-            // iconBox
-            // 
-            this.iconBox.Image = global::聊天软件_客户端.Properties.Resources.cantFindPicture;
-            this.iconBox.Location = new System.Drawing.Point(8, 3);
-            this.iconBox.Name = "iconBox";
-            this.iconBox.Size = new System.Drawing.Size(120, 120);
-            this.iconBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.iconBox.TabIndex = 0;
-            this.iconBox.TabStop = false;
             // 
             // nameLabel
             // 
@@ -76,7 +68,6 @@
             this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.mainPanel.Controls.Add(this.testBtn);
             this.mainPanel.Controls.Add(this.sayingLabel);
             this.mainPanel.Controls.Add(this.friendsListPanel);
             this.mainPanel.Controls.Add(this.addFriendsBtn);
@@ -86,15 +77,6 @@
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(310, 660);
             this.mainPanel.TabIndex = 5;
-            // 
-            // testBtn
-            // 
-            this.testBtn.Location = new System.Drawing.Point(155, 630);
-            this.testBtn.Name = "testBtn";
-            this.testBtn.Size = new System.Drawing.Size(75, 23);
-            this.testBtn.TabIndex = 7;
-            this.testBtn.Text = "test";
-            this.testBtn.UseVisualStyleBackColor = true;
             // 
             // sayingLabel
             // 
@@ -114,6 +96,28 @@
             this.friendsListPanel.Size = new System.Drawing.Size(300, 490);
             this.friendsListPanel.TabIndex = 5;
             // 
+            // iconBox
+            // 
+            this.iconBox.Image = global::聊天软件_客户端.Properties.Resources.cantFindPicture;
+            this.iconBox.Location = new System.Drawing.Point(8, 3);
+            this.iconBox.Name = "iconBox";
+            this.iconBox.Size = new System.Drawing.Size(120, 120);
+            this.iconBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.iconBox.TabIndex = 0;
+            this.iconBox.TabStop = false;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.Icon = global::聊天软件_客户端.Properties.Resources.mainIcon;
+            this.notifyIcon.Text = "有消息!";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
+            // 
+            // blinkTimer
+            // 
+            this.blinkTimer.Interval = 200;
+            this.blinkTimer.Tick += new System.EventHandler(this.blinkTimer_Tick);
+            // 
             // ClientMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -125,8 +129,9 @@
             this.Name = "ClientMainForm";
             this.Text = "六度聊天软件";
             this.Load += new System.EventHandler(this.ClientMainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.iconBox)).EndInit();
+            this.SizeChanged += new System.EventHandler(this.ClientMainForm_SizeChanged);
             this.mainPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.iconBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -139,7 +144,8 @@
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Panel friendsListPanel;
         private System.Windows.Forms.Label sayingLabel;
-        private System.Windows.Forms.Button testBtn;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.Timer blinkTimer;
     }
 }
 

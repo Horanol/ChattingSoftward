@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\Names.cs" />
     <Compile Include="ProtocolsHandler\AddFriendsRequestHandler.cs" />
     <Compile Include="ProtocolsHandler\AddFriendsRespondHandler.cs" />
     <Compile Include="ProtocolsHandler\FileHandler.cs" />
@@ -52,15 +53,21 @@
     <Compile Include="ProtocolsHandler\IHandlerProtocol.cs" />
     <Compile Include="ProtocolsHandler\MessageHandler.cs" />
     <Compile Include="ProtocolsHandler\SaveInfoHandler.cs" />
+    <Compile Include="ProtocolsHandler\SendFileRequestHandler.cs" />
     <Compile Include="ProtocolsHandler\SignInOrUpHandler.cs" />
     <Compile Include="ProtocolsHandler\ProtocolHandler.cs" />
+    <Compile Include="ProtocolsHandler\SpecialEffectHandler.cs" />
+    <Compile Include="ProtocolsHandler\SendFileRespondHandler.cs" />
     <Compile Include="Protocols\AddFriendsRequestProtocol.cs" />
     <Compile Include="Protocols\AddFriendsRespondProtocol.cs" />
     <Compile Include="Protocols\FileProtocol.cs" />
     <Compile Include="Protocols\GetFriendsInfoProtocol.cs" />
     <Compile Include="Protocols\MessageProtocol.cs" />
     <Compile Include="Protocols\SearchFriendsProtocol.cs" />
+    <Compile Include="Protocols\SendFileRequestProtocol.cs" />
+    <Compile Include="Protocols\SendFileRespondProtocol.cs" />
     <Compile Include="Protocols\SignInProtocol.cs" />
+    <Compile Include="Protocols\SpecialEffectProtocol.cs" />
     <Compile Include="Protocols\UserDetailInfoProtocol.cs" />
     <Compile Include="Protocols\UserPublicInfoProtocol.cs" />
     <Compile Include="ProtocolsHandler\SearchFriendsHandler.cs" />

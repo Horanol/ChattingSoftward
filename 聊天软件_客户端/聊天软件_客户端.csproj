@@ -65,6 +65,13 @@
     <Compile Include="Forms\AddFriendsRespondForm.Designer.cs">
       <DependentUpon>AddFriendsRespondForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FileRequestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FileRequestForm.Designer.cs">
+      <DependentUpon>FileRequestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Names.cs" />
     <Compile Include="LogicController.cs" />
     <Compile Include="Forms\ConversationForm.cs">
       <SubType>Form</SubType>
@@ -90,13 +97,19 @@
     <Compile Include="ProtocolsHandler\SaveFriendsInfoHandler.cs" />
     <Compile Include="ProtocolsHandler\ProtocolHandler.cs" />
     <Compile Include="ProtocolsHandler\SearchFriendsHandler.cs" />
+    <Compile Include="ProtocolsHandler\SendFileRequestHandler.cs" />
+    <Compile Include="ProtocolsHandler\SendFileRespondHandler.cs" />
+    <Compile Include="ProtocolsHandler\SpecialEffectHandler.cs" />
     <Compile Include="Protocols\AddFriendsRequestProtocol.cs" />
     <Compile Include="Protocols\AddFriendsRespondProtocol.cs" />
     <Compile Include="Protocols\FileProtocol.cs" />
     <Compile Include="Protocols\GetFriendsInfoProtocol.cs" />
     <Compile Include="Protocols\MessageProtocol.cs" />
     <Compile Include="Protocols\SearchFriendsProtocol.cs" />
+    <Compile Include="Protocols\SendFileRequestProtocol.cs" />
+    <Compile Include="Protocols\SendFileRespondProtocol.cs" />
     <Compile Include="Protocols\SignInProtocol.cs" />
+    <Compile Include="Protocols\SpecialEffectProtocol.cs" />
     <Compile Include="Protocols\UserDetailInfoProtocol.cs" />
     <Compile Include="Protocols\UserPublicInfoProtocol.cs" />
     <Compile Include="Forms\RegisterForm.cs">
@@ -126,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConversationForm.resx">
       <DependentUpon>ConversationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FileRequestForm.resx">
+      <DependentUpon>FileRequestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -182,6 +198,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\halfTranparent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mainIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tranparentIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\msg.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,7 +9,7 @@ namespace 聊天软件_客户端
     public static class LogicController
     {
         #region 关于ConversationForm的逻辑方法
-        private static Dictionary<string, ConversationForm> dictionary = new Dictionary<string,ConversationForm>();
+        public static Dictionary<string, ConversationForm> dictionary = new Dictionary<string,ConversationForm>();
         public static void AddConverstionForm(string friendsName, ConversationForm form)
         {
             if (!dictionary.ContainsKey(friendsName))
@@ -37,9 +37,18 @@ namespace 聊天软件_客户端
                 dictionary[friendsName].ReceiveMessage(msg);
             }
             //如果还没打开对话窗口，显示闪烁的头像
+            //把消息发给主面板缓存
             else
             {
- 
+                ClientMainForm.OnReceiveMsgInMainPanel(friendsName, msg);
+            }
+        }
+        public static void ShakeConversationForm(SpecialEffectProtocol pro)
+        {
+            //和发起者的聊天对话框，所以是sourceName
+            if (dictionary.ContainsKey(pro.sourceName))
+            {
+                dictionary[pro.sourceName].ShakeForm();
             }
         }
         #endregion
@@ -52,6 +61,10 @@ namespace 聊天软件_客户端
         public static void CanNotLogin()
         {
             LoginForm.OnRefuseLogin();
+        }
+        public static void AlreadyLogin()
+        {
+            LoginForm.OnAlreadyLogin();
         }
         #endregion
 
@@ -66,9 +79,5 @@ namespace 聊天软件_客户端
         }
         #endregion
 
-        public static void CreateRespondRequestForm()
-        {
-            
-        }
     }
 }

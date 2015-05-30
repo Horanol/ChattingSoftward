@@ -49,7 +49,6 @@
             this.Controls.Add(this.button1);
             this.Name = "testForm";
             this.Text = "test";
-            this.Load += new System.EventHandler(this.testForm_Load);
             this.ResumeLayout(false);
 
         }

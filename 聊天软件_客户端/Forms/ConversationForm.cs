@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-
+using System.IO;
 namespace 聊天软件_客户端
 {
     public partial class ConversationForm : Form
@@ -11,14 +11,12 @@ namespace 聊天软件_客户端
         private int currentHeight = 0;
         private PublicUserInfo? myInfo;
         private PublicUserInfo? friendsInfo;
-        private Client myClient;
-
-        public ConversationForm(string _sourceName, string _friendsName, Client _myClient)
+        private System.Timers.Timer preventShakeTooMuchTimer;
+        public ConversationForm(string _sourceName, string _friendsName)
         {
             InitializeComponent();
             friendsName = _friendsName;
             sourceName = _sourceName;
-            myClient = _myClient;
         }
         public ConversationForm()
         {
@@ -32,6 +30,8 @@ namespace 聊天软件_客户端
             friendsInfo = UserInfo.GetPublicUserInfo(friendsName);
             LogicController.AddConverstionForm(friendsName, this);
 
+            preventShakeTooMuchTimer = new System.Timers.Timer(1000);
+            preventShakeTooMuchTimer.Elapsed += this.PreventFrequentShakeForm;
         }
 
         private void sendMessageBtn_Click(object sender, EventArgs e)
@@ -48,10 +48,9 @@ namespace 聊天软件_客户端
         {
             MessageProtocol pro = new MessageProtocol(sourceName, friendsName, msg);
             string newMsg = pro.ToString();
-            MessageBox.Show(newMsg);
-            if (myClient.TryConnectToServer())
+            if (Client.OnTryConnectToServer())
             {
-                if (myClient.SendMessage(newMsg))
+                if (Client.OnSendMessage(newMsg))
                 {
                     statusLabel.Text = "发送成功";
                     SendMessageShow(msg);
@@ -125,6 +124,7 @@ namespace 聊天软件_客户端
         {
             //因为是在其他线程中调用的函数，所以要用Invoke方法来让本控件线程完成该方法
             this.Invoke(new Action<string>(ReceiveMessageShow), str);
+
         }
         private void ReceiveMessageShow(string str)
         {
@@ -184,13 +184,67 @@ namespace 聊天软件_客户端
 
         private void shakeBtn_Click(object sender, EventArgs e)
         {
+            if (preventShakeTooMuchTimer.Enabled == false)
+            {
+                SpecialEffectProtocol pro = new SpecialEffectProtocol(sourceName, friendsName, "ShakeConversationForm");
+                if (Client.OnTryConnectToServer())
+                {
+                    if (Client.OnSendMessage(pro.ToString()))
+                    {
+                        statusLabel.Text = "抖动成功！";
+                        preventShakeTooMuchTimer.Start();
+                    }
+                    else
+                        statusLabel.Text = "抖动失败！";
+                }
+                else
+                    statusLabel.Text = "无法连接服务器";
+            }
+            else
+            {
+                MessageBox.Show("你抖动的太频繁了，喝杯咖啡休息一下吧！");
+            }
 
+        }
+        public void ShakeForm()
+        {
+            //抖动窗口的方法实现
+            //防止抖动太频繁由发送方决定
+            for (int i = 0; i < 70; i++)
+            {
+                this.Location = new Point(this.Location.X + 15, this.Location.Y);
+                this.Location = new Point(this.Location.X, this.Location.Y - 10);
+                this.Location = new Point(this.Location.X - 15, this.Location.Y);
+                this.Location = new Point(this.Location.X, this.Location.Y + 10);
+
+            }
+        }
+        private void PreventFrequentShakeForm(Object sender,EventArgs args)
+        {
+            preventShakeTooMuchTimer.Stop();
+        }
+
+
+        private void fileBtn_Click(object sender, EventArgs e)
+        {
+            string selectFilePath = "";
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = @"C:\";
+            ofd.Filter = "所有文件(*.*)|*.*";//  |  号前面是注释，后面是过滤的扩展名，用逗号隔开
+            ofd.RestoreDirectory = false;//关闭对话框前还原原来路径
+            ofd.Title = "请选择要发送的文件";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                selectFilePath = ofd.FileName;
+            }
+            //向对方发送发送文件请求,fileName保存发送文件的位置
+            SendFileRequestProtocol requestPro = new SendFileRequestProtocol(sourceName, friendsName, selectFilePath);
+            Client.OnSendMessage(requestPro.ToString());
         }
 
         private void ConversationForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             LogicController.RemoveConverstionForm(this.friendsName);
         }
-
     }
 }

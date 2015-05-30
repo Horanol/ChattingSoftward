@@ -80,7 +80,8 @@ namespace 聊天软件
                 streamToClient.BeginRead(buffer, 0, BufferSize, newCallBack, null);
             }
             catch
-            {//若抛出异常
+            {
+                //若抛出异常
                 //若数据流还存在，则释放数据流
                 if (streamToClient != null)
                     streamToClient.Dispose();

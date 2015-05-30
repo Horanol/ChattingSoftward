@@ -14,7 +14,7 @@ namespace 聊天软件_客户端
     public class ProtocolSpliter
     {
         private string partialProtocal;
-        string pattern = "(^<protocol>.*?</protocol>)";
+        string pattern =@"(^<protocol>[\s\S]*?</protocol>)";
 
         public ProtocolSpliter()
         {
@@ -151,6 +151,31 @@ namespace 聊天软件_客户端
             {
                 string friendsName = messageNode.Attributes["friendsName"].Value;
                 return new GetFriendsInfoProtocol(friendsName);
+            }
+            else if (messageNode.Attributes["type"].Value == "SpecialEffect")
+            {
+                string sourceName = messageNode.Attributes["sourceName"].Value;
+                string destinationName = messageNode.Attributes["destinationName"].Value;
+                string effect = messageNode.Attributes["effect"].Value;
+                //返回消息类型
+                return new SpecialEffectProtocol(sourceName, destinationName, effect);
+            }
+            else if (messageNode.Attributes["type"].Value == Names.ProtocolTypes.SEND_FILE_REQUEST)
+            {
+                string sourceName = messageNode.Attributes[Names.ProtocolMembers.SOURCE_NAME].Value;
+                string destinationName = messageNode.Attributes[Names.ProtocolMembers.DESTINATION_NAME].Value;
+                string fileName = messageNode.Attributes[Names.ProtocolMembers.FILE_NAME].Value;
+                //返回消息类型
+                return new SendFileRequestProtocol(sourceName, destinationName, fileName);
+            }
+            else if (messageNode.Attributes["type"].Value == Names.ProtocolTypes.SEND_FILE_RESPOND)
+            {
+                string sourceName = messageNode.Attributes[Names.ProtocolMembers.SOURCE_NAME].Value;
+                string destinationName = messageNode.Attributes[Names.ProtocolMembers.DESTINATION_NAME].Value;
+                string fileName = messageNode.Attributes[Names.ProtocolMembers.FILE_NAME].Value;
+                string respond = messageNode.Attributes[Names.ProtocolMembers.RESPOND].Value;
+                //返回消息类型
+                return new SendFileRespondProtocol(sourceName, destinationName, fileName, respond);
             }
             else
                 return null;

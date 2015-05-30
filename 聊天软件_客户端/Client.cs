@@ -20,14 +20,19 @@ namespace 聊天软件_客户端
         public string clientName;
         public IPAddress serverIPAddress;
         public IPAddress clientIPAddress;
+
+        public static Func<string,bool> OnSendMessage;
+        public static Func<bool> OnTryConnectToServer;
         public Client()
         {
             //做好初始化工作
             buffer = new byte[BufferSize];
-            serverIPAddress = Dns.GetHostAddresses(Dns.GetHostName())//这个函数返回一堆ip地址，包括ipv6，ipv4等待，所以需要筛选
+            serverIPAddress = Dns.GetHostAddresses(Dns.GetHostName())//这个函数返回一堆ip地址，包括ipv6，ipv4等，所以需要筛选
                                                                              .Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).First();
-            clientIPAddress = Dns.GetHostAddresses(Dns.GetHostName())//这个函数返回一堆ip地址，包括ipv6，ipv4等待，所以需要筛选
+            clientIPAddress = Dns.GetHostAddresses(Dns.GetHostName())//这个函数返回一堆ip地址，包括ipv6，ipv4等，所以需要筛选
                                                                                   .Where(ip => ip.AddressFamily == AddressFamily.InterNetwork).First();
+            OnSendMessage += SendMessage;
+            OnTryConnectToServer += TryConnectToServer;
         }
         public bool TryConnectToServer()
         {

@@ -72,6 +72,7 @@
             this.fileBtn.TabIndex = 4;
             this.fileBtn.Text = "发文件";
             this.fileBtn.UseVisualStyleBackColor = true;
+            this.fileBtn.Click += new System.EventHandler(this.fileBtn_Click);
             // 
             // sendMessageBox
             // 

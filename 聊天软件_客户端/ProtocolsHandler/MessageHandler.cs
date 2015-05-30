@@ -9,11 +9,6 @@ namespace 聊天软件_客户端
 {
     public class MessageHandler : IHandlerProtocol
     {
-        //private Client myClient;
-        //public MessageHandler(Client _client)
-        //{
-        //    myClient = _client;
-        //}
 
         /// <summary>
         /// 处理转发消息
@@ -32,6 +27,10 @@ namespace 聊天软件_客户端
                 else if (pro.content == "LoginRefused")
                 {
                     LogicController.CanNotLogin();
+                }
+                else if (pro.content == "AlreadyLogin")
+                {
+                    LogicController.AlreadyLogin();
                 }
                 else if (pro.content == "UserNameAccepted")
                 {

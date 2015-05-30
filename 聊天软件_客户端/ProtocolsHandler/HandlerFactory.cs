@@ -46,6 +46,18 @@ namespace 聊天软件_客户端
             {
                 return new AddFriendsRespondHandler();
             }
+            else if (pro.GetType() == typeof(SpecialEffectProtocol))
+            {
+                return new SpecialEffectHandler();
+            }
+            else if (pro.GetType() == typeof(SendFileRequestProtocol))
+            {
+                return new SendFileRequestHandler();
+            }
+            else if (pro.GetType() == typeof(SendFileRespondProtocol))
+            {
+                return new SendFileRespondHandler(myClient);
+            }
             else
                 return null;
         }
