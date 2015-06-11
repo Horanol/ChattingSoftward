@@ -19,7 +19,7 @@ namespace 聊天软件_客户端
         {
             UserPublicInfoProtocol pro = (UserPublicInfoProtocol)_pro;
 
-            string iconRootPath = Environment.CurrentDirectory + "\\IconBuffer\\";
+            string iconRootPath = Directory.GetCurrentDirectory() + "\\IconBuffer\\";
             if (Directory.Exists(iconRootPath))
             {
                 string searchFilePattern = "Icon_" + pro.userName + ".*";

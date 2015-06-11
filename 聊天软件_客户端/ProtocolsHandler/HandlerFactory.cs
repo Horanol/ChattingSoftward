@@ -23,7 +23,7 @@ namespace 聊天软件_客户端
             {
                 return new FileHandler(myClient);
             }
-            //收到好友信息请求回应时
+            //收到好友信息请求回应时,可以在主面板上刷新好友列表信息
             else if (pro.GetType() == typeof(GetFriendsInfoProtocol))
             {
                 return new GetFriendsInfoHandler();

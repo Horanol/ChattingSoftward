@@ -46,6 +46,7 @@
             // 
             // iconBox
             // 
+            this.iconBox.Image = global::聊天软件_客户端.Properties.Resources.noIcon;
             this.iconBox.Location = new System.Drawing.Point(13, 70);
             this.iconBox.Name = "iconBox";
             this.iconBox.Size = new System.Drawing.Size(120, 120);

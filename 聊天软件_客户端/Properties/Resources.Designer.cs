@@ -102,6 +102,16 @@ namespace 聊天软件_客户端.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap noIcon {
+            get {
+                object obj = ResourceManager.GetObject("noIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rightBubble {
             get {
                 object obj = ResourceManager.GetObject("rightBubble", resourceCulture);

@@ -27,7 +27,7 @@ namespace 聊天软件_客户端
         {
             this.Text = "和" + friendsName + "的会话";
             myInfo = UserInfo.GetPublicUserInfo(sourceName);
-            friendsInfo = UserInfo.GetPublicUserInfo(friendsName);
+            friendsInfo = UserInfo.GetPublicFriendsInfo(friendsName);
             LogicController.AddConverstionForm(friendsName, this);
 
             preventShakeTooMuchTimer = new System.Timers.Timer(1000);
@@ -219,7 +219,7 @@ namespace 聊天软件_客户端
 
             }
         }
-        private void PreventFrequentShakeForm(Object sender,EventArgs args)
+        private void PreventFrequentShakeForm(Object sender, EventArgs args)
         {
             preventShakeTooMuchTimer.Stop();
         }

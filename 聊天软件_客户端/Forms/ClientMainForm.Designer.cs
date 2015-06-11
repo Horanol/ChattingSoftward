@@ -15,6 +15,7 @@
         {
             if (disposing && (components != null))
             {
+                this.notifyIcon.Dispose();
                 components.Dispose();
             }
             base.Dispose(disposing);

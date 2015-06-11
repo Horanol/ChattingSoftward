@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace 聊天软件_客户端
 {
-    public class AddFriendsRespondHandler:IHandlerProtocol
+    public class AddFriendsRespondHandler : IHandlerProtocol
     {
         /// <summary>
         /// 判断Respond的内容，如果是接受的话
@@ -15,14 +15,16 @@ namespace 聊天软件_客户端
         /// <param name="_pro"></param>
         public void HandlerProtocol(Protocol _pro)
         {
+
             AddFriendsRespondProtocol pro = (AddFriendsRespondProtocol)_pro;
-            if (pro.respond.ToLower() == "accepted")
+            if (pro.respond == "Accepted")
             {
                 System.Windows.Forms.MessageBox.Show(pro.respondent + "    已经接受了你的好友请求");
                 UserInfo.AddFriend(pro.sponsor, pro.respondent);
                 ClientMainForm.OnUpdateFriendsList();
 
             }
+
         }
     }
 }

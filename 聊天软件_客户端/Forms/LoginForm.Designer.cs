@@ -142,6 +142,7 @@
             this.rememberPasswordCheckBox.TabIndex = 7;
             this.rememberPasswordCheckBox.Text = "记住密码";
             this.rememberPasswordCheckBox.UseVisualStyleBackColor = true;
+            this.rememberPasswordCheckBox.CheckedChanged += new System.EventHandler(this.rememberPasswordCheckBox_CheckedChanged);
             // 
             // LoginForm
             // 

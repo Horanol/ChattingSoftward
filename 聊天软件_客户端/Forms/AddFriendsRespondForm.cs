@@ -40,11 +40,12 @@ namespace 聊天软件_客户端
             {
                 if (myClient.SendMessage(respondPro.ToString()))
                 {
+                    //修改好友关系
+                    UserInfo.AddFriend(pro.respondent, pro.sponsor);
                     //发送好友信息请求
                     GetFriendsInfoProtocol getPro = new GetFriendsInfoProtocol(pro.sponsor);
                     myClient.SendMessage(getPro.ToString());
-                    //修改好友关系
-                    UserInfo.AddFriend(pro.respondent, pro.sponsor);
+
 
                     this.Close();
                 }

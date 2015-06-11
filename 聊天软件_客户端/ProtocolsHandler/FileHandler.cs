@@ -30,12 +30,12 @@ namespace 聊天软件_客户端
                 if (pro.destinationName == myClient.clientName)
                 {
                     //因为服务器给客户端发送的是头像，所以把头像缓存地址写入pro.fileName，再调用ReceiveFile方法
-                    if (!Directory.Exists(Environment.CurrentDirectory + "\\IconBuffer"))
+                    if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\IconBuffer"))
                     {
-                        Directory.CreateDirectory(Environment.CurrentDirectory + "\\IconBuffer");
+                        Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\IconBuffer");
                     }
                     //设置保存目录到fileName里
-                    pro.fileName = Environment.CurrentDirectory + "\\IconBuffer\\" + pro.fileName;
+                    pro.fileName = Directory.GetCurrentDirectory() + "\\IconBuffer\\" + pro.fileName;
                     ReceiveFile(pro);
                 }
             }

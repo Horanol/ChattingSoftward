@@ -24,7 +24,7 @@ namespace 聊天软件
             names = new List<string>();
             //从文件中读取全部注册的用户信息，构造用户信息字典
             infoDictionary = new Dictionary<string, UserDetailInfo>();//记得new一个对象再使用！！！
-            infoXmlPath = AppDomain.CurrentDomain.BaseDirectory + "UserInfo.xml";
+            infoXmlPath = Directory.GetCurrentDirectory() + "\\UserInfo.xml";
             //判断文件是否存在，而不是判断目录是否存在
             if (!File.Exists(infoXmlPath))
             {

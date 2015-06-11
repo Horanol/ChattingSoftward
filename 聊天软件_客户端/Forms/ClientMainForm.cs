@@ -10,7 +10,7 @@ namespace 聊天软件_客户端
         private PublicUserInfo? userInfo;
         private int index = 0;
         private int notifyIconChangeIndex;
-        private Dictionary<string, Customized_FriendsItemPanel> itemPanels;
+        private Dictionary<string, Customized_FriendsItemPanel> itemsDictionary;
 
         private AddFriendsForm adForm;
 
@@ -35,7 +35,7 @@ namespace 聊天软件_客户端
         public ClientMainForm(Client client)
         {
             myClient = client;
-            itemPanels = new Dictionary<string, Customized_FriendsItemPanel>();
+            itemsDictionary = new Dictionary<string, Customized_FriendsItemPanel>();
             conversationBufferDictionary = new Dictionary<string, List<string>>();
 
             InitializeComponent();
@@ -73,30 +73,21 @@ namespace 聊天软件_客户端
         /// </summary>
         public void InitializeFriendsList()
         {
-            try
+            this.friendsListPanel.Controls.Clear();
+            PrivateUserInfo? info = UserInfo.GetPrivateUserInfo(myClient.clientName);
+            if (info != null)
             {
-                this.friendsListPanel.Controls.Clear();
-                PrivateUserInfo? info = UserInfo.GetPrivateUserInfo(myClient.clientName);
-                if (info != null)
+                if (info.Value.friendsName != null)
                 {
-                    if (info.Value.friendsName != null)
+                    PublicUserInfo?[] friendsInfo = new PublicUserInfo?[info.Value.friendsName.Length];
+
+                    for (int i = 0; i < friendsInfo.Length; i++)
                     {
-                        PublicUserInfo?[] friendsInfo = new PublicUserInfo?[info.Value.friendsName.Length];
-
-                        for (int i = 0; i < friendsInfo.Length; i++)
-                        {
-                            friendsInfo[i] = UserInfo.GetPublicFriendsInfo(info.Value.friendsName[i]);
-                        }
-                        GenerateFriendsItems(friendsInfo);
+                        friendsInfo[i] = UserInfo.GetPublicFriendsInfo(info.Value.friendsName[i]);
                     }
+                    GenerateFriendsItems(friendsInfo);
                 }
-
             }
-            catch
-            {
-
-            }
-
         }
         private void GetOfflineMsg()
         {
@@ -109,16 +100,20 @@ namespace 聊天软件_客户端
         }
         private void GenerateFriendsItems(PublicUserInfo?[] info)
         {
+            //生成新的好友列表时候要把字典缓存清空，把序号index清零
+            itemsDictionary.Clear();
+            index = 0;
             this.SuspendLayout();
             this.friendsListPanel.VerticalScroll.Value = 0;
             for (int i = 0; i < info.Length; i++)
             {
                 if (info[i] != null)
                 {
+
                     Customized_FriendsItemPanel itemPanel = new Customized_FriendsItemPanel(index);
                     itemPanel.SetInitialzation((PublicUserInfo)info[i]);
                     this.friendsListPanel.Controls.Add(itemPanel.singleFriendsPanel);
-                    itemPanels.Add(info[i].Value.name, itemPanel);
+                    itemsDictionary.Add(info[i].Value.name, itemPanel);
                     index++;
                 }
             }
@@ -176,17 +171,34 @@ namespace 聊天软件_客户端
             {
                 ConversationForm newForm = new ConversationForm(myClient.clientName, name);
                 newForm.Show();
+                newForm.Focus();
                 foreach (string msg in conversationBufferDictionary[name])
                 {
                     newForm.ReceiveMessage(msg);
                 }
             }
         }
+        /// <summary>
+        /// 单例模式实现弹出添加好友窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void addFriendsBtn_Click(object sender, EventArgs e)
         {
-            if (adForm == null)
+            if (adForm == null || adForm.IsDisposed == true)
+            {
                 adForm = new AddFriendsForm(myClient);
-            adForm.Show();
+                adForm.Show();
+            }
+            else
+            {
+                //若窗体被最小化了，把它正常化并聚焦
+                if (adForm.WindowState == FormWindowState.Minimized)
+                {
+                    adForm.WindowState = FormWindowState.Normal;
+                }
+                adForm.Focus();
+            }
         }
         private void ShowFileRequestForm(SendFileRequestProtocol pro)
         {
@@ -266,6 +278,8 @@ namespace 聊天软件_客户端
             }
         }
         #endregion
+
+
 
 
 

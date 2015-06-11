@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -40,9 +33,14 @@ namespace 聊天软件_客户端
             //使其他线程能操作主窗口的控件
             Control.CheckForIllegalCrossThreadCalls = false;
 
-            clientName = userNameBox.Text;
-            password = passwordBox.Text;
+            clientName = 聊天软件_客户端.Properties.Settings.Default.rememberedName;
+            userNameBox.Text = clientName;
 
+            password = 聊天软件_客户端.Properties.Settings.Default.rememberedPassword;
+            passwordBox.Text = password;
+
+            this.rememberUserNameCheckBox.Checked = 聊天软件_客户端.Properties.Settings.Default.userNameBoxChecked;
+            this.rememberPasswordCheckBox.Checked = 聊天软件_客户端.Properties.Settings.Default.passwordBoxChecked;
             //绑定登录和拒绝登录方法
             OnAcceptLogin += AcceptLogin;
             OnRefuseLogin += RefuseLogin;
@@ -142,9 +140,34 @@ namespace 聊天软件_客户端
 
         private void rememberUserNameCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            
+            if (rememberUserNameCheckBox.Checked)
+            {
+                聊天软件_客户端.Properties.Settings.Default.rememberedName = this.userNameBox.Text;
+                聊天软件_客户端.Properties.Settings.Default.userNameBoxChecked = true;
+                聊天软件_客户端.Properties.Settings.Default.Save();
+            }
+            else
+            {
+                聊天软件_客户端.Properties.Settings.Default.rememberedName = "";
+                聊天软件_客户端.Properties.Settings.Default.userNameBoxChecked = false;
+                聊天软件_客户端.Properties.Settings.Default.Save(); 
+            }
+        }
 
-
+        private void rememberPasswordCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rememberPasswordCheckBox.Checked)
+            {
+                聊天软件_客户端.Properties.Settings.Default.rememberedPassword = this.passwordBox.Text;
+                聊天软件_客户端.Properties.Settings.Default.passwordBoxChecked = true;
+                聊天软件_客户端.Properties.Settings.Default.Save();
+            }
+            else
+            {
+                聊天软件_客户端.Properties.Settings.Default.rememberedPassword = "";
+                聊天软件_客户端.Properties.Settings.Default.passwordBoxChecked = false;
+                聊天软件_客户端.Properties.Settings.Default.Save();
+            }
         }
 
 

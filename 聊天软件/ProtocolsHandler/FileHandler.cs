@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -23,12 +19,12 @@ namespace 聊天软件
             FileProtocol pro = (FileProtocol)_pro;
             if (pro.destinationName == "server")//若是当前客户端发给服务器的文件
             {
-                if (!Directory.Exists(Environment.CurrentDirectory + "\\IconBuffer"))
+                if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\IconBuffer"))
                 {
-                    Directory.CreateDirectory(Environment.CurrentDirectory + "\\IconBuffer");
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\IconBuffer");
                 }
                 //设置保存目录到fileName里
-                pro.fileName = Environment.CurrentDirectory + "\\IconBuffer\\" + pro.fileName;
+                pro.fileName = Directory.GetCurrentDirectory() + "\\IconBuffer\\" + pro.fileName;
                 ReceiveFile(pro);
             }
             else //若是用户对用户发的文件，给目的用户发送这个FileProtocol
