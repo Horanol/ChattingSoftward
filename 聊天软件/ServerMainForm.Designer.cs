@@ -38,10 +38,11 @@
             // 
             // serverLogBox
             // 
-            this.serverLogBox.Location = new System.Drawing.Point(95, 102);
+            this.serverLogBox.Location = new System.Drawing.Point(97, 105);
             this.serverLogBox.Multiline = true;
             this.serverLogBox.Name = "serverLogBox";
-            this.serverLogBox.Size = new System.Drawing.Size(443, 323);
+            this.serverLogBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.serverLogBox.Size = new System.Drawing.Size(443, 359);
             this.serverLogBox.TabIndex = 0;
             // 
             // ipAddressBox
@@ -86,18 +87,18 @@
             this.listenBtn.UseVisualStyleBackColor = true;
             this.listenBtn.Click += new System.EventHandler(this.listenBtn_Click);
             // 
-            // serverMainForm
+            // ServerMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 537);
+            this.Controls.Add(this.serverLogBox);
             this.Controls.Add(this.listenBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.portBox);
             this.Controls.Add(this.ipAddressBox);
-            this.Controls.Add(this.serverLogBox);
-            this.Name = "serverMainForm";
+            this.Name = "ServerMainForm";
             this.Text = "ServerMainForm";
             this.Load += new System.EventHandler(this.ServerMainForm_Load);
             this.ResumeLayout(false);
